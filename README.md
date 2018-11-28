@@ -1,3 +1,6 @@
+<img height="250" src="Documentation/logo.png">
+
+
 ## Description
 
 **FastTweener** - is a one more simple tweener, but **without memory allocation**!
