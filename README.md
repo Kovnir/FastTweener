@@ -10,7 +10,7 @@ Will be released in AssetStore soon.
 
 Source of inspiration - [DoTween](http://dotween.demigiant.com/). This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**.
 
-## Banchmarks
+## Benchmarks
 
 <table>
    <tr>
@@ -18,39 +18,38 @@ Source of inspiration - [DoTween](http://dotween.demigiant.com/). This is realy 
     <th>DoTween</th>
     <th>FastTweener</th>
    </tr>
-   
    <tr>
    <td rowspan="2"><i>DoTween.Init()</i> vs <i>FastTween.Init()</i></td>
    <td>Memory (kb)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>2,3</td>
+   <td>4,6</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>4,38</td>
+   <td>4,33</td>
    </tr>
 
    <td rowspan="2">First <i>MonoBehaviour.Update()</i></td>
    <td>Memory (kb)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>5</td>
+   <td>0</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>1,02</td>
+   <td>0,77</td>
    </tr>
-   
+
    <td rowspan="2">Total</td>
    <td>Memory (kb)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>7,3</td>
+   <td>4,6</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>5,4</td>
+   <td>5,1</td>
    </tr>
 
 
@@ -209,9 +208,9 @@ Source of inspiration - [DoTween](http://dotween.demigiant.com/). This is realy 
 </table>
 
 Benchmarks was measured on Apple MacBook Pro 2017.
-It was created to show memory allocation difference. It is const every time so we doesn't exequte test a big amount.
+It was created to show memory allocation difference.
 Time metrics is not super-accurate and made only to ensure it not slower than DoTween. 
-
+You can reapeat measures by yourself, all sources are in Benchmark folder.
 
 
 So, if you don't need all power of DoTween and your goal is memory allocation optimisation - this is plugin for you!
