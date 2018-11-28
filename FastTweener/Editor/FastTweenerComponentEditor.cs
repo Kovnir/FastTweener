@@ -8,21 +8,17 @@ namespace Kovnir.Tweener
         public override void OnInspectorGUI()
         {
             bool inited;
-            int schedulingTasksInPool;
-            int activeSchedulingTask;
-            int floatTasksInPool;
-            int activeFloatTasks;
-            FastTweenerComponent.GetEditorData(out inited, out schedulingTasksInPool, out activeSchedulingTask, out floatTasksInPool, out activeFloatTasks);
+            int tasksInPool;
+            int activeTask;
+            FastTweenerComponent.GetEditorData(out inited, out tasksInPool, out activeTask);
             if (!inited)
             {                
                 EditorGUILayout.LabelField("Not inited yet.");
                 return;
             }
-            EditorGUILayout.LabelField("Scheduling", EditorStyles.boldLabel);
-            ShowStats(activeSchedulingTask, schedulingTasksInPool);
-            
-            EditorGUILayout.LabelField("Float", EditorStyles.boldLabel);
-            ShowStats(activeFloatTasks, floatTasksInPool);
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Tasks:", EditorStyles.boldLabel);
+            ShowStats(activeTask, tasksInPool);
         }
 
         private static void ShowStats(int active, int inPool)

@@ -5,28 +5,26 @@ using Random = System.Random;
 
 namespace Kovnir.Tweener.TaskManagment
 {
-    public class TaskManager<T> where T : ITask, new()
+    public class TaskManager
     {
         //here are not constants to allocate memory in the constructor instead of first access. Just for pretty benchmarks
         private static readonly string TASK_POOL_EMPTY = "FastTweener: Task pool is empty! Creating new object.";
         private static readonly string CATCHED_ERROR = "FastTween: Catched an exception in callback: {0}\n{1}";
         
-        private readonly Stack<T> tasksPool;
-        private readonly List<T> activeTasks;
+        private readonly Stack<FastTweenTask> tasksPool;
+        private readonly List<FastTweenTask> activeTasks;
         private readonly HashSet<int> cancelledTasks;
-        private readonly Func<T, bool> process;
 
         private int lastId = 0;
         
-        public TaskManager(int size, Func<T, bool> process)
+        public TaskManager(int size)
         {
-            tasksPool = new Stack<T>(size);
-            activeTasks = new List<T>(size);
+            tasksPool = new Stack<FastTweenTask>(size);
+            activeTasks = new List<FastTweenTask>(size);
             cancelledTasks = new HashSet<int>();
-            this.process = process;
             for (int i = 0; i < size; i++)
             {
-                tasksPool.Push(new T());
+                tasksPool.Push(new FastTweenTask());
             }
         }
 
@@ -38,14 +36,14 @@ namespace Kovnir.Tweener.TaskManagment
             }
         }
 
-        public T Set()
+        public FastTweenTask Pop()
         {
             int id = lastId;
             lastId++;
-            T task;
+            FastTweenTask task;
             if (tasksPool.Count == 0)
             {
-                task = new T();
+                task = new FastTweenTask();
                 Debug.LogWarning(TASK_POOL_EMPTY);
             }
             else
@@ -59,6 +57,8 @@ namespace Kovnir.Tweener.TaskManagment
 
         public void Process()
         {
+            var unscaledDeltaTime = Time.unscaledDeltaTime;
+            var deltaTime = Time.deltaTime;
             for (int i = 0; i < activeTasks.Count; i++)
             {
                 var task = activeTasks[i];
@@ -73,7 +73,7 @@ namespace Kovnir.Tweener.TaskManagment
                 bool needToRemove = false;
                 try
                 {
-                    needToRemove = process(task);
+                    needToRemove = task.Proccess(unscaledDeltaTime, deltaTime);
                 }
                 catch (Exception e)
                 {
@@ -82,6 +82,17 @@ namespace Kovnir.Tweener.TaskManagment
 
                 if (needToRemove)
                 {
+                    if (task.OnComplete != null)
+                    {
+                        try
+                        {
+                            task.OnComplete();
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError(String.Format(CATCHED_ERROR, e.Message, e.StackTrace));
+                        }
+                    }
                     tasksPool.Push(task);
                     activeTasks.RemoveAt(i);
                     i--;
