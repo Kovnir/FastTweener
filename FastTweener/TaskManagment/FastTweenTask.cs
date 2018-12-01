@@ -9,7 +9,7 @@ namespace Kovnir.Tweener.TaskManagment
         //here are not constants to allocate memory in the constructor instead of first access. Just for pretty benchmarks
         private static readonly string TASK_LATE = "FastTweener: Low fps. Scheduled task late: ";
         
-        public int Id;
+        public uint Id;
         public float Duration;
         public bool IgnoreTimescale;
         public Action OnComplete;
