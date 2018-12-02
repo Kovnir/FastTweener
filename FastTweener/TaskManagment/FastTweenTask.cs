@@ -66,53 +66,80 @@ namespace Kovnir.Tweener.TaskManagment
         }
 
 
-        public bool Proccess(float unscaledDeltaTime, float deltaTime)
+        public bool Proccess(float unscaledDeltaTime, float deltaTime, out Exception exception)
         {
             CurrentTime += IgnoreTimescale ? unscaledDeltaTime : deltaTime;
             switch (Type)
             {
                 case TweenType.DelayCall:
+                    exception = null;
                     return ProcessScheduling();
                 case TweenType.Float:
-                    return ProcessFloat();
+                    return ProcessFloat(out exception);
                 case TweenType.Vector3:
-                    return ProcessVector3();
+                    return ProcessVector3(out exception);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private bool ProcessFloat()
+        private Exception CallFloatCallback(float value)
+        {
+            try
+            {
+                Callback(value);
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+            return null;
+        }
+
+        private Exception CallVector3Callback(Vector3 value)
+        {
+            try
+            {
+                CallbackVector3(value);
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+            return null;
+        }
+
+        private bool ProcessFloat(out Exception exception)
         {
             if (CurrentTime <= 0)
             {
-                Callback(Start);
+                exception = CallFloatCallback(Start);
                 return false;
             }
             if (CurrentTime >= Duration)
             {
-                Callback(End);
+                exception = CallFloatCallback(End);
                 return true;
             }
-            Callback(EaseCalculator.Calculate(Ease, Start, End, CurrentTime, Duration));
+            exception = CallFloatCallback(EaseCalculator.Calculate(Ease, Start, End, CurrentTime, Duration));
             return false;            
         }
         
-        private bool ProcessVector3()
+        private bool ProcessVector3(out Exception exception)
         {
             if (CurrentTime <= 0)
             {
-                CallbackVector3(StartVector3);
+                exception = CallVector3Callback(StartVector3);
                 return false;
             }
             if (CurrentTime >= Duration)
             {
-                CallbackVector3(EndVector3);
+                exception = CallVector3Callback(EndVector3);
                 return true;
             }
 
             float value = EaseCalculator.Calculate(Ease, Start, End, CurrentTime, Duration);
-            CallbackVector3(StartVector3 + (EndVector3 - StartVector3) * value);
+            exception = CallVector3Callback(StartVector3 + (EndVector3 - StartVector3) * value);
             return false;
         }
         
@@ -128,7 +155,6 @@ namespace Kovnir.Tweener.TaskManagment
                 }
                 return true;
             }
-
             return false;
         }
 

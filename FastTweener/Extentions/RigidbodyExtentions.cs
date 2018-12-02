@@ -6,7 +6,7 @@ namespace Kovnir.Tweener.Extention
     public static class RigidbodyExtentions
     {
         //ease ignoreTimescale onComplete        
-        public static FastTween TweenMove(this Rigidbody target, Vector3 endValue, float duration, Ease ease = Ease.OutQuad, bool ignoreTimescale = false, Action onComplete = null)
+        public static FastTween TweenMove(this Rigidbody target, Vector3 endValue, float duration, Ease ease = FastTweener.DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweener.Vector3(target.position, endValue, duration, x => target.position = x, ease, ignoreTimescale, onComplete);
         }
@@ -31,7 +31,7 @@ namespace Kovnir.Tweener.Extention
 
         
         //ease ignoreTimescale onComplete                
-        public static FastTween TweenMoveX(this Rigidbody target, float endValue, float duration, Ease ease = Ease.OutQuad, bool ignoreTimescale = false, Action onComplete = null)
+        public static FastTween TweenMoveX(this Rigidbody target, float endValue, float duration, Ease ease = FastTweener.DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweener.Float(target.position.x, endValue,
                 duration, x => target.position = new Vector3(x, target.position.y, target.position.z), ease, ignoreTimescale, onComplete);
@@ -60,7 +60,7 @@ namespace Kovnir.Tweener.Extention
 
         
         //ease ignoreTimescale onComplete                
-        public static FastTween TweenMoveY(this Rigidbody target, float endValue, float duration, Ease ease = Ease.OutQuad, bool ignoreTimescale = false, Action onComplete = null)
+        public static FastTween TweenMoveY(this Rigidbody target, float endValue, float duration, Ease ease = FastTweener.DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweener.Float(target.position.y, endValue,
                 duration, x => target.position = new Vector3(target.position.x, x, target.position.z), ease, ignoreTimescale, onComplete);
@@ -89,7 +89,7 @@ namespace Kovnir.Tweener.Extention
         
         
         //ease ignoreTimescale onComplete                
-        public static FastTween TweenMoveZ(this Rigidbody target, float endValue, float duration, Ease ease = Ease.OutQuad, bool ignoreTimescale = false, Action onComplete = null)
+        public static FastTween TweenMoveZ(this Rigidbody target, float endValue, float duration, Ease ease = FastTweener.DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweener.Float(target.position.z, endValue,
                 duration, x => target.position = new Vector3(target.position.x, target.position.y, x), ease, ignoreTimescale, onComplete);
@@ -118,7 +118,7 @@ namespace Kovnir.Tweener.Extention
 
         
         //ease ignoreTimescale onComplete                
-        public static FastTween TweenRotate(this Rigidbody target, Vector3 endValue, float duration, Ease ease = Ease.OutQuad, bool ignoreTimescale = false, Action onComplete = null)
+        public static FastTween TweenRotate(this Rigidbody target, Vector3 endValue, float duration, Ease ease = FastTweener.DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweener.Vector3(target.rotation.eulerAngles, endValue, duration,
                 x => target.rotation = Quaternion.Euler(x), ease, ignoreTimescale, onComplete);

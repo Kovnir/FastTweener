@@ -23,9 +23,26 @@
             return FastTweener.IsActive(this);
         }
 
-        public void SetEase(Ease ease)
+        public FastTween SetEase(Ease ease)
         {
-            FastTweener.SetEase(this, ease);            
+            FastTweener.SetEase(this, ease);
+            return this;
+        }
+
+        public Ease GetEase()
+        {
+            return FastTweener.GetEase(this);            
+        }
+
+        public FastTween SetIgnoreTimeScale(bool ignoreTimeScale)
+        {
+            FastTweener.SetIgnoreTimeScale(this, ignoreTimeScale);
+            return this;
+        }
+        
+        public bool GetIgnoreTimeScale()
+        {
+            return FastTweener.GetIgnoreTimeScale(this);
         }
     }
 }

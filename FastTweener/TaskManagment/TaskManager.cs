@@ -10,13 +10,13 @@ namespace Kovnir.Tweener.TaskManagment
         //here are not constants to allocate memory in the constructor instead of first access. Just for pretty benchmarks
         private static readonly string TASK_POOL_EMPTY = "FastTweener: Task pool is empty! Creating new object.";
         private static readonly string CATCHED_ERROR = "FastTween: Catched an exception in callback: {0}\n{1}";
-        
+
         private readonly Stack<FastTweenTask> tasksPool;
         private readonly List<FastTweenTask> activeTasks;
         private readonly HashSet<uint> killedTasks;
 
         private uint lastId = 1;
-        
+
         public TaskManager(int size)
         {
             tasksPool = new Stack<FastTweenTask>(size);
@@ -48,10 +48,11 @@ namespace Kovnir.Tweener.TaskManagment
                     }
                 }
             }
+
             return false;
         }
-        
-        public bool SetEase(uint id, Ease ease)
+
+        public void SetEase(uint id, Ease ease)
         {
             if (!killedTasks.Contains(id))
             {
@@ -61,6 +62,43 @@ namespace Kovnir.Tweener.TaskManagment
                     {
                         activeTasks[i].Ease = ease;
                     }
+                }
+            }
+        }
+
+        public Ease GetEase(uint id)
+        {
+            for (int i = 0; i < activeTasks.Count; i++)
+            {
+                if (activeTasks[i].Id == id)
+                {
+                    return activeTasks[i].Ease;
+                }
+            }
+            return FastTweener.DEFAULT_EASE;
+        }
+
+        public void SetIgnoreTimeScale(uint id, bool ignoreTimeScale)
+        {
+            if (!killedTasks.Contains(id))
+            {
+                for (int i = 0; i < activeTasks.Count; i++)
+                {
+                    if (activeTasks[i].Id == id)
+                    {
+                        activeTasks[i].IgnoreTimescale = ignoreTimeScale;
+                    }
+                }
+            }
+        }
+
+        public bool GetIgnoreTimeScale(uint id)
+        {
+            for (int i = 0; i < activeTasks.Count; i++)
+            {
+                if (activeTasks[i].Id == id)
+                {
+                    return activeTasks[i].IgnoreTimescale;
                 }
             }
             return false;
@@ -78,8 +116,9 @@ namespace Kovnir.Tweener.TaskManagment
             }
             else
             {
-                task = tasksPool.Pop();                
+                task = tasksPool.Pop();
             }
+
             task.Id = id;
             activeTasks.Add(task);
             return task;
@@ -100,14 +139,11 @@ namespace Kovnir.Tweener.TaskManagment
                     continue;
                 }
 
-                bool needToRemove = false;
-                try
+                Exception exception;
+                bool needToRemove = task.Proccess(unscaledDeltaTime, deltaTime, out exception);
+                if (exception != null)
                 {
-                    needToRemove = task.Proccess(unscaledDeltaTime, deltaTime);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(String.Format(CATCHED_ERROR, e.Message, e.StackTrace));
+                    Debug.LogError(String.Format(CATCHED_ERROR, exception.Message, exception.StackTrace));
                 }
 
                 if (needToRemove)
@@ -123,6 +159,7 @@ namespace Kovnir.Tweener.TaskManagment
                             Debug.LogError(String.Format(CATCHED_ERROR, e.Message, e.StackTrace));
                         }
                     }
+
                     tasksPool.Push(task);
                     activeTasks.RemoveAt(i);
                     i--;
@@ -139,6 +176,7 @@ namespace Kovnir.Tweener.TaskManagment
         {
             return tasksPool.Count;
         }
+
         public int GetActiveTasksCount()
         {
             return activeTasks.Count;

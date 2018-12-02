@@ -73,11 +73,26 @@ namespace Kovnir.Tweener
             return taskManager.IsActive(tween.Id);
         }
         
-        private bool SetEaseInternal(FastTween tween, Ease ease)
+        private void SetEaseInternal(FastTween tween, Ease ease)
         {
-            return taskManager.SetEase(tween.Id, ease);
+            taskManager.SetEase(tween.Id, ease);
         }
         
+        private Ease GetEaseInternal(FastTween tween)
+        {
+            return taskManager.GetEase(tween.Id);
+        }
+
+        private void SetIgnoreTimeScaleInternal(FastTween tween, bool ignoreTimeScale)
+        {
+            taskManager.SetIgnoreTimeScale(tween.Id, ignoreTimeScale);
+        }
+        
+        private bool GetIgnoreTimeScaleInternal(FastTween tween)
+        {
+            return taskManager.GetIgnoreTimeScale(tween.Id);
+        }
+
         private void Update()
         {
             taskManager.Process();
@@ -119,12 +134,38 @@ namespace Kovnir.Tweener
             return false;
         }
 
-        public static void SetEase(FastTween fastTween, Ease ease)
+        public static void SetEase(FastTween tween, Ease ease)
         {
             if (instance != null)
             {
-                instance.SetEaseInternal(fastTween, ease);
+                instance.SetEaseInternal(tween, ease);
             }
+        }
+        
+        public static Ease GetEase(FastTween tween)
+        {
+            if (instance != null)
+            {
+                return instance.GetEaseInternal(tween);
+            }
+            return FastTweener.DEFAULT_EASE;
+        }
+
+        public static void SetIgnoreTimeScale(FastTween tween, bool ignoreTimeScale)
+        {
+            if (instance != null)
+            {
+                instance.SetIgnoreTimeScaleInternal(tween, ignoreTimeScale);
+            }
+        }
+
+        public static bool GetIgnoreTimeScale(FastTween tween)
+        {
+            if (instance != null)
+            {
+                return instance.GetIgnoreTimeScaleInternal(tween);
+            }
+            return false;
         }
 
         //for editor
