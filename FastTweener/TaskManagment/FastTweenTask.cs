@@ -34,6 +34,7 @@ namespace Kovnir.Tweener.TaskManagment
             End = end;
             Duration = duration;
             Callback = callback;
+            CallbackVector3 = null;
             Ease = ease;
             IgnoreTimescale = ignoreTimescale;
             OnComplete = onComplete;
@@ -45,6 +46,8 @@ namespace Kovnir.Tweener.TaskManagment
             Type = TweenType.DelayCall;
             Duration = delay;
             OnComplete = action;
+            Callback = null;
+            CallbackVector3 = null;
             IgnoreTimescale = ignoreTimescale;
             CurrentTime = 0;
         }
@@ -56,6 +59,7 @@ namespace Kovnir.Tweener.TaskManagment
             StartVector3 = start;
             EndVector3 = end;
             Duration = duration;
+            Callback = null;
             CallbackVector3 = callback;
             Ease = ease;
             IgnoreTimescale = ignoreTimescale;
