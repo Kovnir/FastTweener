@@ -21,6 +21,10 @@ namespace Kovnir.Tweener
 
         public static void Kill(FastTween tween)
         {
+            if (tween.Id == 0)
+            {
+                return;
+            }
             FastTweenerComponent.Kill(tween);
         }
 
@@ -47,6 +51,11 @@ namespace Kovnir.Tweener
         public static bool GetIgnoreTimeScale(FastTween tween)
         {
             return FastTweenerComponent.GetIgnoreTimeScale(tween);
+        }
+
+        public static void SetOnComplete(FastTween tween, Action onComplete)
+        {
+            FastTweenerComponent.SetOnComplete(tween, onComplete);
         }
 
         //ease ignoreTimescale onComplete

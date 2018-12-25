@@ -1,4 +1,6 @@
-﻿namespace Kovnir.Tweener
+﻿using System;
+
+namespace Kovnir.Tweener
 {
     public struct FastTween
     {
@@ -11,21 +13,27 @@
         
         public void Kill()
         {
-            FastTweener.Kill(this);
+            if (Id != 0)
+            {
+                FastTweener.Kill(this);
+            }
         }
 
         public bool IsActive()
         {
-            if (Id == 0)
+            if (Id != 0)
             {
-                return false;
+                return FastTweener.IsActive(this);
             }
-            return FastTweener.IsActive(this);
+            return false;
         }
 
         public FastTween SetEase(Ease ease)
         {
-            FastTweener.SetEase(this, ease);
+            if (Id != 0)
+            {
+                FastTweener.SetEase(this, ease);
+            }
             return this;
         }
 
@@ -36,13 +44,29 @@
 
         public FastTween SetIgnoreTimeScale(bool ignoreTimeScale)
         {
-            FastTweener.SetIgnoreTimeScale(this, ignoreTimeScale);
+            if (Id != 0)
+            {
+                FastTweener.SetIgnoreTimeScale(this, ignoreTimeScale);
+            }
+            return this;
+        }
+
+        public FastTween OnComplete(Action onComplete)
+        {
+            if (Id != 0)
+            {
+                FastTweener.SetOnComplete(this, onComplete);
+            }
             return this;
         }
         
         public bool GetIgnoreTimeScale()
         {
-            return FastTweener.GetIgnoreTimeScale(this);
+            if (Id != 0)
+            {
+                return FastTweener.GetIgnoreTimeScale(this);
+            }
+            return false;
         }
     }
 }

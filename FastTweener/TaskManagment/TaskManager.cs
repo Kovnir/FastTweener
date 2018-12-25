@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -13,7 +14,8 @@ namespace Kovnir.Tweener.TaskManagment
 
         private readonly Stack<FastTweenTask> tasksPool;
         private readonly List<FastTweenTask> activeTasks;
-        private readonly HashSet<uint> killedTasks;
+        private HashSet<uint> killedTasks;
+        private HashSet<uint> killedTasksSecond;
 
         private uint lastId = 1;
 
@@ -22,6 +24,7 @@ namespace Kovnir.Tweener.TaskManagment
             tasksPool = new Stack<FastTweenTask>(size);
             activeTasks = new List<FastTweenTask>(size);
             killedTasks = new HashSet<uint>();
+            killedTasksSecond = new HashSet<uint>();
             for (int i = 0; i < size; i++)
             {
                 tasksPool.Push(new FastTweenTask());
@@ -104,6 +107,20 @@ namespace Kovnir.Tweener.TaskManagment
             return false;
         }
 
+        public void SetOnComplete(uint id, Action onComplete)
+        {
+            if (!killedTasks.Contains(id))
+            {
+                for (int i = 0; i < activeTasks.Count; i++)
+                {
+                    if (activeTasks[i].Id == id)
+                    {
+                        activeTasks[i].OnComplete = onComplete;
+                    }
+                }
+            }
+        }
+
         public FastTweenTask Pop()
         {
             uint id = lastId;
@@ -126,12 +143,16 @@ namespace Kovnir.Tweener.TaskManagment
 
         public void Process()
         {
+            var buf = killedTasks;
+            killedTasks = killedTasksSecond; //clean hashset
+            killedTasksSecond = buf; //task we killed in current iteration
+            
             var unscaledDeltaTime = Time.unscaledDeltaTime;
             var deltaTime = Time.deltaTime;
             for (int i = 0; i < activeTasks.Count; i++)
             {
                 var task = activeTasks[i];
-                if (killedTasks.Count > 0 && killedTasks.Contains(task.Id))
+                if (killedTasksSecond.Count > 0 && killedTasksSecond.Contains(task.Id))
                 {
                     tasksPool.Push(task);
                     activeTasks.RemoveAt(i);
@@ -166,9 +187,9 @@ namespace Kovnir.Tweener.TaskManagment
                 }
             }
 
-            if (killedTasks.Count > 0)
+            if (killedTasksSecond.Count > 0)
             {
-                killedTasks.Clear();
+                killedTasksSecond.Clear();
             }
         }
 

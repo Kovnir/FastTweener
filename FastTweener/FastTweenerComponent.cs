@@ -92,6 +92,11 @@ namespace Kovnir.Tweener
         {
             return taskManager.GetIgnoreTimeScale(tween.Id);
         }
+        
+        private void SetOnCompleteInternal(FastTween tween, Action onComplete)
+        {
+            taskManager.SetOnComplete(tween.Id, onComplete);
+        }
 
         private void Update()
         {
@@ -166,6 +171,14 @@ namespace Kovnir.Tweener
                 return instance.GetIgnoreTimeScaleInternal(tween);
             }
             return false;
+        }
+
+        public static void SetOnComplete(FastTween tween, Action onComplete)
+        {
+            if (instance != null)
+            {
+                instance.SetOnCompleteInternal(tween, onComplete);
+            }
         }
 
         //for editor
