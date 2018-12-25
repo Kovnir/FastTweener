@@ -5,6 +5,13 @@ namespace Kovnir.Tweener
     [CustomEditor(typeof(FastTweenerComponent))]
     public class FastTweenerComponentEditor : Editor
     {
+        void OnEnable() { EditorApplication.update += Update; }
+        void OnDisable() { EditorApplication.update -= Update; }
+        void Update()
+        {
+            Repaint();
+        }
+
         public override void OnInspectorGUI()
         {
             bool inited;
