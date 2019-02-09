@@ -20,8 +20,15 @@ namespace Kovnir.FastTweener
             }
         }
 
+        private static bool inited;
+        
         public static void Init(FastTweenerSettings settings = null)
         {
+            if (inited)
+            {
+                Debug.LogError(FastTweenerStringConstants.ALREADY_INITIALIZED);
+                return;
+            }
             if (settings != null)
             {
                 FastTweener.settings = settings;

@@ -14,5 +14,6 @@ namespace Kovnir.FastTweener
         public static readonly string GAME_OBJECT_WAS_DESTROYED = "FastTweener: GameObject was destroyed! Name: {0}; Type: {1}";
         public static readonly string TASK_LATE = "FastTweener: Low fps. Scheduled task late: {0}";
         public static readonly string FPS_VALUE_ERROR = "FastTweener: You need to set fps grate than one or equal zero to disable warnings";
+        public static readonly string ALREADY_INITIALIZED = "FastTweener: FastTweener has been already initialized!";
     }
 }
