@@ -2,13 +2,10 @@
 using System.Globalization;
 using UnityEngine;
 
-namespace Kovnir.Tweener.TaskManagment
+namespace Kovnir.FastTweener.TaskManagment
 {
     public class FastTweenTask
     {
-        //here are not constants to allocate memory in the constructor instead of first access. Just for pretty benchmarks
-        private static readonly string TASK_LATE = "FastTweener: Low fps. Scheduled task late: ";
-        
         public uint Id;
         public float Duration;
         public bool IgnoreTimescale;
@@ -35,10 +32,19 @@ namespace Kovnir.Tweener.TaskManagment
             Duration = duration;
             Callback = callback;
             CallbackVector3 = null;
-            Ease = ease;
+            Ease = GetRealEase(ease);
             IgnoreTimescale = ignoreTimescale;
             OnComplete = onComplete;
             CurrentTime = 0;
+        }
+
+        private Ease GetRealEase(Ease ease)
+        {
+            if (ease == Ease.Default)
+            {
+                return FastTweener.Setting.DefaultEase;
+            }
+            return ease;
         }
 
         public void SetDelayCall(float delay, Action action, bool ignoreTimescale)
@@ -61,7 +67,7 @@ namespace Kovnir.Tweener.TaskManagment
             Duration = duration;
             Callback = null;
             CallbackVector3 = callback;
-            Ease = ease;
+            Ease = GetRealEase(ease);
             IgnoreTimescale = ignoreTimescale;
             OnComplete = onComplete;
             CurrentTime = 0;
@@ -152,11 +158,16 @@ namespace Kovnir.Tweener.TaskManagment
         {
             if (CurrentTime >= Duration)
             {
-                //log warning if we late becouse of low fps (less then 30fps)
-                if (CurrentTime - Duration < -1f/30f)
+                if (FastTweener.Setting.CriticalFpsToLogWarning != 0)
                 {
-                    Debug.LogWarning(TASK_LATE + CurrentTime.ToString(CultureInfo.InvariantCulture));
+                    if (Duration - CurrentTime < 1f / FastTweener.Setting.CriticalFpsToLogWarning)
+                    {
+                        //log warning if we late because of low fps
+                        Debug.LogWarning(String.Format(FastTweenerStringConstants.TASK_LATE,
+                            CurrentTime.ToString(CultureInfo.InvariantCulture)));
+                    }
                 }
+
                 return true;
             }
             return false;

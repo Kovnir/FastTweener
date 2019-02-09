@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Globalization;
-using Kovnir.Tweener.TaskManagment;
+using Kovnir.FastTweener.TaskManagment;
 using UnityEngine;
 
-namespace Kovnir.Tweener
+namespace Kovnir.FastTweener
 {
     public class FastTweenerComponent : MonoBehaviour
     {
-        //here are not constants to allocate memory in the constructor instead of first access. Just for pretty benchmarks
-        private static readonly string CALLBACK_NULL = "FastTweener: Callback is null!";
-        private static readonly string CATCHED_ERROR = "FastTween: Catched an exception in OnComplete callback: {0}\n{1}";
-
         private static TaskManager taskManager;
 
         private static FastTweenerComponent instance;
 
-        public static void Init(int poolSize = FastTweener.START_TASK_LIST_SIZE)
+        public static void Init()
         {
             if (instance != null)
             {
@@ -24,14 +20,14 @@ namespace Kovnir.Tweener
             instance = new GameObject().AddComponent<FastTweenerComponent>();
             instance.name = "FastTweener";
             DontDestroyOnLoad(instance);
-            taskManager = new TaskManager(poolSize); 
+            taskManager = new TaskManager(FastTweener.Setting.TaskPoolSize); 
         }
 
         private FastTween ScheduleInternal(float delay, Action callback, bool ignoreTimescale)
         {
             if (callback == null)
             {
-                Debug.LogError(CALLBACK_NULL);
+                Debug.LogError(FastTweenerStringConstants.CALLBACK_IS_NULL);
                 return new FastTween();
             }
             var task = taskManager.Pop();
@@ -43,7 +39,7 @@ namespace Kovnir.Tweener
         {
             if (callback == null)
             {
-                Debug.LogError(CALLBACK_NULL);
+                Debug.LogError(FastTweenerStringConstants.CALLBACK_IS_NULL);
                 return new FastTween();
             }
             var task = taskManager.Pop();
@@ -55,7 +51,7 @@ namespace Kovnir.Tweener
         {
             if (callback == null)
             {
-                Debug.LogError(CALLBACK_NULL);
+                Debug.LogError(FastTweenerStringConstants.CALLBACK_IS_NULL);
                 return new FastTween();
             }
             var task = taskManager.Pop();
@@ -153,7 +149,7 @@ namespace Kovnir.Tweener
             {
                 return instance.GetEaseInternal(tween);
             }
-            return FastTweener.DEFAULT_EASE;
+            return FastTweener.Setting.DefaultEase;
         }
 
         public static void SetIgnoreTimeScale(FastTween tween, bool ignoreTimeScale)

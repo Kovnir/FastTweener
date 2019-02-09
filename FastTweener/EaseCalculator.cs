@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Kovnir.Tweener
+namespace Kovnir.FastTweener
 {
     public enum Ease
     {
@@ -40,6 +40,7 @@ namespace Kovnir.Tweener
 //        InFlash,
 //        OutFlash,
 //        InOutFlash,
+        Default
     }
 
     public static class EaseCalculator

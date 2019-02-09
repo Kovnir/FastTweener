@@ -4,13 +4,13 @@ using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Kovnir.Tweener.TaskManagment
+namespace Kovnir.FastTweener.TaskManagment
 {
     public class TaskManager
     {
         //here are not constants to allocate memory in the constructor instead of first access. Just for pretty benchmarks
         private static readonly string TASK_POOL_EMPTY = "FastTweener: Task pool is empty! Creating new object.";
-        private static readonly string CATCHED_ERROR = "FastTween: Catched an exception in callback: {0}\n{1}";
+        private static readonly string CATCHED_ERROR = "FastTweener: Exception caught in callback: {0}\n{1}";
 
         private readonly Stack<FastTweenTask> tasksPool;
         private readonly List<FastTweenTask> activeTasks;
@@ -78,7 +78,7 @@ namespace Kovnir.Tweener.TaskManagment
                     return activeTasks[i].Ease;
                 }
             }
-            return FastTweener.DEFAULT_EASE;
+            return FastTweener.Setting.DefaultEase;
         }
 
         public void SetIgnoreTimeScale(uint id, bool ignoreTimeScale)

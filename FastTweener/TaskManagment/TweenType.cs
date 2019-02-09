@@ -1,4 +1,4 @@
-﻿namespace Kovnir.Tweener.TaskManagment
+﻿namespace Kovnir.FastTweener.TaskManagment
 {
     public enum TweenType
     {

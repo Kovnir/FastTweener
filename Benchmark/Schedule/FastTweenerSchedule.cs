@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Kovnir.Tweener.Test
+namespace Kovnir.FastTweener.Test
 {
     public class FastTweenerSchedule : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kovnir.Tweener
+namespace Kovnir.FastTweener
 {
     public struct FastTween
     {

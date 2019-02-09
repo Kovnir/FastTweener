@@ -1,17 +1,33 @@
 ﻿using System;
+using Kovnir.FastTweener.Extension;
 using UnityEngine;
 
-namespace Kovnir.Tweener
+namespace Kovnir.FastTweener
 {
-    
     public static class FastTweener
     {
-        public const int START_TASK_LIST_SIZE = 16;
-        public const Ease DEFAULT_EASE = Ease.OutQuad;
-        
-        public static void Init(int poolSize = START_TASK_LIST_SIZE)
+        private static FastTweenerSettings settings;
+
+        public static FastTweenerSettings Setting
         {
-            FastTweenerComponent.Init(poolSize);
+            get
+            {
+                if (settings == null)
+                {
+                    settings = new FastTweenerSettings();
+                }
+                return settings;
+            }
+        }
+
+        public static void Init(FastTweenerSettings settings = null)
+        {
+            if (settings != null)
+            {
+                FastTweener.settings = settings;
+            }
+
+            FastTweenerComponent.Init();
         }
         
         public static FastTween Schedule(float delay, Action callback, bool ignoreTimescale = false)
@@ -60,7 +76,7 @@ namespace Kovnir.Tweener
 
         //ease ignoreTimescale onComplete
         public static FastTween Float(float start, float end, float duration, Action<float> callback,
-            Ease ease = DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
+            Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweenerComponent.Float(start, end, duration, callback, ease, ignoreTimescale, onComplete);
         }
@@ -69,7 +85,6 @@ namespace Kovnir.Tweener
         public static FastTween Float(float start, float end, float duration, Action<float> callback,
             Ease ease, Action onComplete)
         {
-            var r = new FastTween();
             return FastTweenerComponent.Float(start, end, duration, callback, ease, false, onComplete);
         }
         
@@ -77,18 +92,18 @@ namespace Kovnir.Tweener
         public static FastTween Float(float start, float end, float duration, Action<float> callback,
             bool ignoreTimescale, Action onComplete = null)
         {
-            return FastTweenerComponent.Float(start, end, duration, callback, DEFAULT_EASE, ignoreTimescale, onComplete);
+            return FastTweenerComponent.Float(start, end, duration, callback, Ease.Default, ignoreTimescale, onComplete);
         }
         
         //onComplete
         public static FastTween Float(float start, float end, float duration, Action<float> callback, Action onComplete)
         {
-            return FastTweenerComponent.Float(start, end, duration, callback, DEFAULT_EASE, false, onComplete);
+            return FastTweenerComponent.Float(start, end, duration, callback, Ease.Default, false, onComplete);
         }
         
         //ease ignoreTimescale onComplete        
         public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback,
-            Ease ease = DEFAULT_EASE, bool ignoreTimescale = false, Action onComplete = null)
+            Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)
         {
             return FastTweenerComponent.Vector3(start, end, duration, callback, ease, ignoreTimescale, onComplete);
         }
@@ -104,13 +119,13 @@ namespace Kovnir.Tweener
         public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback,
             bool ignoreTimescale, Action onComplete = null)
         {
-            return FastTweenerComponent.Vector3(start, end, duration, callback, DEFAULT_EASE, ignoreTimescale, onComplete);
+            return FastTweenerComponent.Vector3(start, end, duration, callback, Ease.Default, ignoreTimescale, onComplete);
         }
 
         //onComplete        
         public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback, Action onComplete)
         {
-            return FastTweenerComponent.Vector3(start, end, duration, callback, DEFAULT_EASE, false, onComplete);
+            return FastTweenerComponent.Vector3(start, end, duration, callback, Ease.Default, false, onComplete);
         }
     }
 }

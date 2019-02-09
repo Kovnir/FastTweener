@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Kovnir.Tweener;
-using Kovnir.Tweener.TaskManagment;
+using DG.Tweening;
+using Kovnir.FastTweener;
+using Kovnir.FastTweener.Extension;
+using Kovnir.FastTweener.TaskManagment;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Ease = Kovnir.FastTweener.Ease;
 
 public class FastTweenerTests
 {
@@ -90,7 +93,7 @@ public class FastTweenerTests
         yield return new WaitForSecondsRealtime(3f);
         Assert.False(done);
         tween.Kill();
-        
+
         done = false;
         FastTweener.Schedule(2, () => done = true, true);
         Assert.False(done);
@@ -148,7 +151,7 @@ public class FastTweenerTests
         bool done = false;
         LogAssert.ignoreFailingMessages = true;
         var tween = FastTweener.Float(0, 1, 1, f => { throw new Exception(); }, () => done = true);
-    
+
         Assert.False(done);
         Assert.IsTrue(tween.IsActive());
         yield return new WaitForSecondsRealtime(0.5f);
@@ -158,12 +161,13 @@ public class FastTweenerTests
         Assert.True(done);
         Assert.IsFalse(tween.IsActive());
     }
-    
+
     [UnityTest]
     public IEnumerator ExceptionInOnComplete()
     {
         float value = 0;
-        var tween = FastTweener.Float(0, 1, 0.5f, f => { value = f; }, () => { throw new Exception("test exception");});
+        var tween = FastTweener.Float(0, 1, 0.5f, f => { value = f; },
+            () => { throw new Exception("test exception"); });
         Assert.AreNotEqual(tween.Id, 0);
         Assert.AreEqual(value, 0);
 
@@ -173,7 +177,7 @@ public class FastTweenerTests
         Assert.AreEqual(value, 1);
         Assert.IsFalse(tween.IsActive());
     }
-    
+
     [UnityTest]
     public IEnumerator KillIsActive()
     {
@@ -189,7 +193,7 @@ public class FastTweenerTests
         Assert.False(tween.IsActive());
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
         Assert.AreEqual(taskManager.GetActiveTasksCount(), active);
-        
+
         tween.Kill(); //kill killed is ok
         Assert.False(tween.IsActive());
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
@@ -200,17 +204,17 @@ public class FastTweenerTests
     public IEnumerator GetSetEase()
     {
         var tween = FastTweener.Float(0, 1, 1, f => { });
-        Assert.AreEqual(tween.GetEase(), FastTweener.DEFAULT_EASE);
+        Assert.AreEqual(tween.GetEase(), Ease.OutQuad);
         tween.SetEase(Ease.InBack);
         Assert.AreEqual(tween.GetEase(), Ease.InBack);
         tween.SetEase(Ease.InCirc);
         Assert.AreEqual(tween.GetEase(), Ease.InCirc);
         tween.Kill();
         yield return null;
-        Assert.AreEqual(tween.GetEase(), FastTweener.DEFAULT_EASE);
+        Assert.AreEqual(tween.GetEase(), Ease.OutQuad);
     }
-    
-    
+
+
     [UnityTest]
     public IEnumerator GetSetIgnoreTimeScale()
     {
@@ -218,7 +222,7 @@ public class FastTweenerTests
         bool done = false;
         var tween = FastTweener.Schedule(2, () => done = true);
         Assert.AreEqual(tween.GetIgnoreTimeScale(), false);
-        
+
         Assert.False(done);
         yield return new WaitForSecondsRealtime(3f);
         Assert.False(done);
@@ -238,6 +242,4 @@ public class FastTweenerTests
 
         Time.timeScale = 1;
     }
-    
-    
 }

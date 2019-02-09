@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace Kovnir.Tweener
+namespace Kovnir.FastTweener
 {
     [CustomEditor(typeof(FastTweenerComponent))]
     public class FastTweenerComponentEditor : Editor
