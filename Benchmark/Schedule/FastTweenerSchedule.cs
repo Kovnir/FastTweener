@@ -8,7 +8,7 @@ namespace Kovnir.FastTweener.Test
 
         void Start()
         {
-            FastTweener.Schedule(1f, () => { Done = true; });
+            FastTweener.Schedule(0.5f, () => { Done = true; });
         }
     }
 }

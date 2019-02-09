@@ -7,9 +7,9 @@ namespace Kovnir.FastTweener.Test
     {
         public bool Done = false;
 
-        private void OnEnable()
+        private void Start()
         {
-            DOVirtual.DelayedCall(1f, () => { Done = true; });
+            DOVirtual.DelayedCall(0.5f, () => { Done = true; });
         }
     }
 }

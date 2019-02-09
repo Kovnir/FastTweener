@@ -6,7 +6,7 @@ namespace Kovnir.FastTweener.Test
     {
         void Start()
         {
-            FastTweener.Float(-3, 3, 2,
+            FastTweener.Float(-3, 3, 0.5f,
                 value => { transform.position = new Vector3(transform.position.x, value, transform.position.z); },
                 Ease.OutBounce);
         }
