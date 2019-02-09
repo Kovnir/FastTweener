@@ -160,7 +160,7 @@ namespace Kovnir.FastTweener.TaskManagment
             {
                 if (FastTweener.Setting.CriticalFpsToLogWarning != 0)
                 {
-                    if (Duration - CurrentTime < 1f / FastTweener.Setting.CriticalFpsToLogWarning)
+                    if (Duration - CurrentTime > 1f / FastTweener.Setting.CriticalFpsToLogWarning)
                     {
                         //log warning if we late because of low fps
                         Debug.LogWarning(String.Format(FastTweenerStringConstants.TASK_LATE,
