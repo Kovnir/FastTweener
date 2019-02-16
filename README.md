@@ -3,7 +3,7 @@
 
 ## Description
 
-**FastTweener** - is a one more simple tweener, but **without memory allocation**!
+**FastTweener** - is a one more simple tweener, but **entirely without memory allocation**!
 
 Will be released in AssetStore soon.
 
@@ -216,3 +216,7 @@ You can reapeat measures by yourself, all sources are in Benchmark folder.
 So, if you don't need all power of DoTween and your goal is memory allocation optimisation - this is plugin for you!
 
 
+
+## Benchmarks
+
+Comming soon...
