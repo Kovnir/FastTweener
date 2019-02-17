@@ -19,37 +19,39 @@ Source of inspiration - [DoTween](http://dotween.demigiant.com/). This is realy 
     <th>FastTweener</th>
    </tr>
    <tr>
-   <td rowspan="2"><i>DoTween.Init()</i> vs <i>FastTween.Init()</i></td>
+   <td rowspan="2"><i>DoTween.Init()</i> vs <i>FastTween.Init()</i>
+      <br><sub>For FastTween used pool with 16 base tweens + 16 rigidbody tweens + 16 transform tweens.
+      <br>DoTween initialisation containce from <i>DoTween.Init()</i>, <i>DoTween..cctor()</i>, and <i>TweenManager..cctor()</i></sub></td>
    <td>Memory (kb)</td>
-   <td>2,3</td>
-   <td>4,6</td>
+   <td>7,9</td>
+   <td>5,3</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>4,38</td>
-   <td>4,33</td>
+   <td>6,013</td>
+   <td>5,602</td>
    </tr>
 
    <td rowspan="2">First <i>MonoBehaviour.Update()</i></td>
    <td>Memory (kb)</td>
-   <td>5</td>
+   <td>0</td>
    <td>0</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>1,02</td>
-   <td>0,77</td>
+   <td>0</td>
+   <td>0,482</td>
    </tr>
 
    <td rowspan="2">Total</td>
    <td>Memory (kb)</td>
-   <td>7,3</td>
-   <td>4,6</td>
+   <td>7,9</td>
+   <td>5,3</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>5,4</td>
-   <td>5,1</td>
+   <td>6,013</td>
+   <td>6,084</td>
    </tr>
 
 
