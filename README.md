@@ -231,6 +231,21 @@ So, if you don't need all power of DoTween and your goal is memory allocation op
 
 
 
-## Benchmarks
+## How to Use
 
 Comming soon...
+
+## Performance hints
+
+`FastTween` is a just struct with tween id. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a tween task in the tween tasks list. But when you send this parameters during a tween creating it will not take additional time.
+
+For example this code is faster:
+```
+FastTween tween = FastTweener.Float(-3, 3, 0.5f, value => DoSomething, Ease.OutBounce, OnComplete);
+```
+Than this code:
+```
+FastTween tween = FastTweener.Float(-3, 3, 0.5f, value => DoSomething);
+tween.SetEase(Ease.OutBounce);
+tween.OnComplete(OnComplete);
+```
