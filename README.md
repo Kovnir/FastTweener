@@ -17,7 +17,7 @@ It was created to show memory allocation difference.
 Time metrics is not super-accurate and made only to ensure it not slower than DoTween. 
 You can reapeat measures by yourself, all sources are in Benchmark folder.
 
-### <i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings
+<details><summary><b><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings</b></summary>
 
 <table>
    <tr>
@@ -27,7 +27,7 @@ You can reapeat measures by yourself, all sources are in Benchmark folder.
    </tr>
    
    <tr>
-   <td rowspan="2"><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings
+   <td rowspan="2" ><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings
       <br><sub>For FastTween used pool with 16 base tweens + 16 rigidbody tweens + 16 transform tweens.
       <br>DoTween initialisation containce from <i>DoTween.Init()</i>, <i>DoTween..cctor()</i>, and <i>TweenManager..cctor()</i></sub></td>
    <td>Memory<br>(kb)</td>
@@ -63,7 +63,9 @@ You can reapeat measures by yourself, all sources are in Benchmark folder.
    </tr>
 </table>
 
-### <i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i> first call
+</details>
+<br>
+<details><summary><b><i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i> first call</b></summary>
 
 First and second call has a big difference in measures.
 
@@ -145,8 +147,10 @@ First and second call has a big difference in measures.
    </tr>
 </table>
 
+</details>
+<br>
+<details><summary><b><i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i> second call</b></summary>
 
-### <i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i> second call
 
 <table>
    <tr>
@@ -225,7 +229,13 @@ First and second call has a big difference in measures.
    </tr>
 </table>
 
+</details>
+<br>
+<details><summary><b>Other</b></summary>
+   Comming soon...
+</details>
 
+<br>
 
 So, if you don't need all power of DoTween and your goal is memory allocation optimisation - this is plugin for you!
 
