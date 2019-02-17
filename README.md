@@ -30,34 +30,34 @@ You can reapeat measures by yourself, all sources are in Benchmark folder.
    <td rowspan="2"><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings
       <br><sub>For FastTween used pool with 16 base tweens + 16 rigidbody tweens + 16 transform tweens.
       <br>DoTween initialisation containce from <i>DoTween.Init()</i>, <i>DoTween..cctor()</i>, and <i>TweenManager..cctor()</i></sub></td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>7,9</td>
    <td>5,3</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>6,013</td>
    <td>5,602</td>
    </tr>
 
    <td rowspan="2">First <i>BehaviourUpdate</i></td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0</td>
    <td>0,482</td>
    </tr>
 
    <td rowspan="2">Total</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>7,9</td>
    <td>5,3</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>6,013</td>
    <td>6,084</td>
    </tr>
@@ -76,34 +76,34 @@ First and second call has a big difference in measures.
 
    <tr>
    <td rowspan="2"><i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i>  first call</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,8</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>2,19</td>
    <td>0,47</td>
    </tr>
 
    <td rowspan="2">First <i>BehaviourUpdate</i></td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,136</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>2,77</td>
    <td>0,285</td>
    </tr>
    
    <td rowspan="2">Total</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,936</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>4,96</td>
    <td>0,755</td>
    </tr>
@@ -116,12 +116,12 @@ First and second call has a big difference in measures.
 
    <tr>
    <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0,0065</td>
    <td>0,0028</td>
    </tr>
@@ -134,12 +134,12 @@ First and second call has a big difference in measures.
 
    <tr>
    <td rowspan="2"><i>On Tween completed</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,6</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>1,56</td>
    <td>0,285</td>
    </tr>
@@ -156,34 +156,34 @@ First and second call has a big difference in measures.
    </tr>
    <tr>
    <td rowspan="2"><i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i>  second call</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,344</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0,41</td>
    <td>0,01</td>
    </tr>
 
    <td rowspan="2">First <i>BehaviourUpdate</i></td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,104</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0,05</td>
    <td>0</td>
    </tr>
    
    <td rowspan="2">Total</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0,448</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0,46</td>
    <td>0,01</td>
    </tr>
@@ -196,12 +196,12 @@ First and second call has a big difference in measures.
 
    <tr>
    <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0,007</td>
    <td>0,004</td>
    </tr>
@@ -214,12 +214,12 @@ First and second call has a big difference in measures.
 
    <tr>
    <td rowspan="2"><i>On Tween completed</td>
-   <td>Memory (kb)</td>
+   <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
    </tr>
    <tr>
-   <td>Time (ms)</td>
+   <td>Time<br>(ms)</td>
    <td>0,03</td>
    <td>0,025</td>
    </tr>
