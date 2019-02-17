@@ -401,7 +401,13 @@ So, if you don't need all power of DoTween and your goal is memory allocation op
 
 ## How to Use
 
-Comming soon...
+### Setup
+
+You can download `FastTweener` from this repository or from AssetStore (coming soon). You can unzip it anywhere in your Unity Assets folder, except Editor folder. No additional setups needed, `FastTweener` is ready to use!
+
+
+Other docs are coming soon...
+
 
 ## Performance hints
 
