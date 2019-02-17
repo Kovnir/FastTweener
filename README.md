@@ -69,7 +69,7 @@ First and second call has a big difference in measures.
 
 <table>
    <tr>
-    <th colspan="2"></th>
+    <th colspan="2"  width="800"></th>
     <th>DoTween</th>
     <th>FastTweener</th>
    </tr>
@@ -150,7 +150,7 @@ First and second call has a big difference in measures.
 
 <table>
    <tr>
-    <th colspan="2"></th>
+    <th colspan="2"  width="800"></th>
     <th>DoTween</th>
     <th>FastTweener</th>
    </tr>
