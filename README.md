@@ -61,37 +61,38 @@ Source of inspiration - [DoTween](http://dotween.demigiant.com/). This is realy 
 
    
    <tr>
-   <td rowspan="2"><i>DOVirtual.Float()</i> vs <i>FastTween.Float()</i></td>
+   <td rowspan="2"><i>DOVirtual.DelayCall()</i> vs <i>FastTween.Schedule()</i>
+      <br><sub>First and second call has a big difference in measures.</sub></td>
    <td>Memory (kb)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>0,8</td>
+   <td>0</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>2,19</td>
+   <td>0,47</td>
    </tr>
 
    <td rowspan="2">First <i>MonoBehaviour.Update()</i></td>
    <td>Memory (kb)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>0,136</td>
+   <td>0</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>2,77</td>
+   <td>0,285</td>
    </tr>
    
    <td rowspan="2">Total</td>
    <td>Memory (kb)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>0,936</td>
+   <td>0</td>
    </tr>
    <tr>
    <td>Time (ms)</td>
-   <td>3,5</td>
-   <td>36</td>
+   <td>4,96</td>
+   <td>0,755</td>
    </tr>
 
 
