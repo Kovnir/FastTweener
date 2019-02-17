@@ -8,7 +8,7 @@
 Will be released in AssetStore soon.
 
 
-Source of inspiration - [DoTween](http://dotween.demigiant.com/). This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**.
+Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**.
 
 ## Benchmarks
 
