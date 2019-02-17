@@ -231,10 +231,168 @@ First and second call has a big difference in measures.
 
 </details>
 <br>
-<details><summary><b>Other</b></summary>
-   Comming soon...
-</details>
+<details><summary><b><i>DOVirtual.Float()</i> vs <i>FastTweener.Float()</i> first call</b></summary>
 
+
+<table>
+   <tr>
+    <th colspan="2" width="800"></th>
+    <th>DoTween</th>
+    <th>FastTweener</th>
+   </tr>
+   <tr>
+   <td rowspan="2"><i>DOVirtual.Float()</i> vs <i>FastTweener.Float()</i> first call</td>
+   <td>Memory<br>(kb)</td>
+   <td>1,3</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>1,255</td>
+   <td>0,48</td>
+   </tr>
+
+   <td rowspan="2">First <i>BehaviourUpdate</i></td>
+   <td>Memory<br>(kb)</td>
+   <td>0,21</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>3</td>
+   <td>1,17</td>
+   </tr>
+   
+   <td rowspan="2">Total</td>
+   <td>Memory<br>(kb)</td>
+   <td>1,51</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>5,255</td>
+   <td>1,65</td>
+   </tr>
+
+
+   <tr>
+   <td colspan="4"></td>
+   </tr>
+
+
+   <tr>
+   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
+   <td>Memory<br>(kb)</td>
+   <td>0</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,02</td>
+   <td>0,017</td>
+   </tr>
+
+
+   <tr>
+   <td colspan="4"></td>
+   </tr>
+
+
+   <tr>
+   <td rowspan="2"><i>On Tween completed</td>
+   <td>Memory<br>(kb)</td>
+   <td>0,466</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,78</td>
+   <td>0,06</td>
+   </tr>
+</table>
+
+</details>
+<br>
+<details><summary><b><i>DOVirtual.Float()</i> vs <i>FastTweener.Float()</i> second call</b></summary>
+
+
+<table>
+   <tr>
+    <th colspan="2" width="800"></th>
+    <th>DoTween</th>
+    <th>FastTweener</th>
+   </tr>
+   <tr>
+   <td rowspan="2"><i>DOVirtual.Float()</i> vs <i>FastTweener.Float()</i> second call</td>
+   <td>Memory<br>(kb)</td>
+   <td>0,6</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,31</td>
+   <td>0,015</td>
+   </tr>
+
+   <td rowspan="2">First <i>BehaviourUpdate</i></td>
+   <td>Memory<br>(kb)</td>
+   <td>0</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,025</td>
+   <td>0,02</td>
+   </tr>
+   
+   <td rowspan="2">Total</td>
+   <td>Memory<br>(kb)</td>
+   <td>0,6</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,335</td>
+   <td>0,035</td>
+   </tr>
+
+
+   <tr>
+   <td colspan="4"></td>
+   </tr>
+
+
+   <tr>
+   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
+   <td>Memory<br>(kb)</td>
+   <td>0</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,02</td>
+   <td>0,016</td>
+   </tr>
+
+
+   <tr>
+   <td colspan="4"></td>
+   </tr>
+
+
+   <tr>
+   <td rowspan="2"><i>On Tween completed</td>
+   <td>Memory<br>(kb)</td>
+   <td>0</td>
+   <td>0</td>
+   </tr>
+   <tr>
+   <td>Time<br>(ms)</td>
+   <td>0,045</td>
+   <td>0,02</td>
+   </tr>
+</table>
+</details>
 <br>
 
 So, if you don't need all power of DoTween and your goal is memory allocation optimisation - this is plugin for you!
