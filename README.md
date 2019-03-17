@@ -401,9 +401,44 @@ So, if you don't need all power of DoTween and your goal is memory allocation op
 
 ## How to Use
 
-### Setup
+### Get Started
+
+#### Importing
 
 You can download `FastTweener` from this repository or from AssetStore (coming soon). You can unzip it anywhere in your Unity Assets folder, except Editor folder. No additional setups needed, `FastTweener` is ready to use!
+
+#### Namespace
+
+To use `FastTweener` you need to add namespace in each class where you want to use it.
+```c#
+using DG.Tweening;
+```
+
+### Initialize
+
+You can initialize `FastTweener` to setup some global options:
+
+```c#
+FastTweenerSettings settings = new FastTweenerSettings();
+//this ease will used for each tween if nothing else set explicitly
+settings.DefaultEase = Ease.OutQuad;
+//size of pool for Transform extensions, like tranform.TweenScale();
+settings.TransformExtensionsPoolSize = 16;
+//size of pool for Rigidbody extensions, like rigidbody.TweenMove();
+settings.RigidbodyExtensionsPoolSize = 16;
+//size of pool of general Tweens (common + extensions)
+settings.TaskPoolSize = 16;
+//if true - FastTweener will write name of GameObject in Errors, but it will allocate addition memory
+settings.SaveGameObjectName = false;
+//FastTweener will write Warnings if actual fps is lower then this value and tweens late. Set 0 to disable Warnings
+settings.CriticalFpsToLogWarning = 30;
+FastTweener.Init(settings);
+```
+
+If you don't do that `FastTweener` will be auto-initialized with the default settings.
+
+**WARNING: If you want to use manual initialization you need to do that before creating your first tween!**
+
 
 
 Other docs are coming soon...
@@ -414,11 +449,11 @@ Other docs are coming soon...
 `FastTween` is a just struct with tween id. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a tween task in the tween tasks list. But when you send this parameters during a tween creating it will not take additional time.
 
 For example this code is faster:
-```
+```c#
 FastTween tween = FastTweener.Float(-3, 3, 0.5f, value => DoSomething, Ease.OutBounce, OnComplete);
 ```
 Than this code:
-```
+```c#
 FastTween tween = FastTweener.Float(-3, 3, 0.5f, value => DoSomething);
 tween.SetEase(Ease.OutBounce);
 tween.OnComplete(OnComplete);
