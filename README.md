@@ -1,7 +1,7 @@
 <img height="250" src="Documentation/logo.png">
 
 
-## Description
+# Description
 
 **FastTweener** - is a one more simple tweener, but **entirely without memory allocation**!
 
@@ -10,7 +10,7 @@ Will be released in AssetStore soon.
 
 Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**.
 
-## Benchmarks
+# Benchmarks
 
 Benchmarks was measured on Apple MacBook Pro 2017.
 It was created to show memory allocation difference.
@@ -399,15 +399,15 @@ So, if you don't need all power of DoTween and your goal is memory allocation op
 
 
 
-## How to Use
+# How to Use
 
-### Get Started
+## Get Started
 
-#### Importing
+### Importing
 
 You can download `FastTweener` from this repository or from AssetStore (coming soon). You can unzip it anywhere in your Unity Assets folder, except Editor folder. No additional setups needed, `FastTweener` is ready to use!
 
-#### Namespace
+### Namespace
 
 To use `FastTweener` you need to add namespace in each class where you want to use it.
 ```c#
@@ -439,12 +439,49 @@ If you don't do that `FastTweener` will be auto-initialized with the default set
 
 **WARNING: If you want to use manual initialization you need to do that before creating your first tween!**
 
+## Create a Tween
 
+There is a several ways to create a new Tween:
+* Using FastTweener class
+```c#
+FastTweener.Float(floatFrom, floatTo, duration, x => { });
+FastTweener.Vector3(vectorFrom, vectorTo, duration, x => { });
+FastTweener.Schedule(delay, () => { });
+```
+* Using Extentions for Transform class
+```c#
+transform.TweenMove(vectorTo, duration);
+transform.TweenMoveX(floatTo, duration);
+transform.TweenMoveY(floatTo, duration);
+transform.TweenMoveZ(floatTo, duration);
+
+transform.TweenLocalMove(vectorTo, duration);
+transform.TweenLocalMoveX(floatTo, duration);
+transform.TweenLocalMoveY(floatTo, duration);
+transform.TweenLocalMoveZ(floatTo, duration);
+
+transform.TweenScale(vectorTo, duration);
+transform.TweenScaleX(floatTo, duration);
+transform.TweenScaleY(floatTo, duration);
+transform.TweenScaleZ(floatTo, duration);
+
+transform.TweenRotate(vectorTo, duration);
+transform.TweenLocalRotate(vectorTo, duration);
+```
+* Using Extentions for Rigidbody class
+```c#
+rigidbody.TweenMove(vectorTo, duration);
+rigidbody.TweenMoveX(floatTo, duration);
+rigidbody.TweenMoveY(floatTo, duration);
+rigidbody.TweenMoveZ(floatTo, duration);
+
+rigidbody.TweenRotate(vectorTo, duration);
+```
 
 Other docs are coming soon...
 
 
-## Performance hints
+# Performance hints
 
 `FastTween` is a just struct with tween id. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a tween task in the tween tasks list. But when you send this parameters during a tween creating it will not take additional time.
 
