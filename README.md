@@ -444,9 +444,9 @@ If you don't do that `FastTweener` will be auto-initialized with the default set
 There is a several ways to create a new Tween:
 * Using FastTweener class
 ```c#
-FastTweener.Float(floatFrom, floatTo, duration, x => { });
-FastTweener.Vector3(vectorFrom, vectorTo, duration, x => { });
-FastTweener.Schedule(delay, () => { });
+FastTweener.Float(floatFrom, floatTo, duration, x => { /* Your logic here */ });
+FastTweener.Vector3(vectorFrom, vectorTo, duration, x => { /* Your logic here */ });
+FastTweener.Schedule(delay, () => { /* Your logic here */ });
 ```
 * Using Extentions for Transform class
 ```c#
@@ -477,6 +477,20 @@ rigidbody.TweenMoveZ(floatTo, duration);
 
 rigidbody.TweenRotate(vectorTo, duration);
 ```
+
+Each method contains required parametrs:
+
+endValue,
+float duration,
+
+And optional optional:
+Ease ease - default one you set in Init, or OutQuad if you didn't set it 
+bool ignoreTimescale - default false,
+Action onComplete - callback will called when tween completed
+
+
+
+
 
 Other docs are coming soon...
 
