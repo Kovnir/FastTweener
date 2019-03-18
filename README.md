@@ -483,6 +483,8 @@ rigidbody.TweenMoveZ(floatTo, duration);
 rigidbody.TweenRotate(vectorTo, duration);
 ```
 
+All extensions methods made without closure and don't allocate memory too.
+
 When you create a Tween it will play automatically.
 
 Each method has required parametrs:
