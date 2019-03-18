@@ -8,7 +8,8 @@
 Will be released in AssetStore soon.
 
 
-Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**.
+Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**. This is not connected with pooling (DoTween has good recycling system), but with that DoTween allocate a memory while working.
+
 
 # Benchmarks
 
@@ -398,6 +399,7 @@ First and second call has a big difference in measures.
 </details>
 <br>
 
+
 So, if you don't need all power of DoTween and your goal is memory allocation optimisation - this is plugin for you!
 
 
@@ -481,6 +483,8 @@ rigidbody.TweenMoveZ(floatTo, duration);
 rigidbody.TweenRotate(vectorTo, duration);
 ```
 
+When you create a Tween it will play automatically.
+
 Each method has required parametrs:
 ```c#
 T endValue              //finish value of tween. Vector3 or float depends on method
@@ -545,6 +549,11 @@ tween.OnComplete(() => Debug.Log("Done!"));
 
 bool isAlive = tween.IsAlive();
 tween.Kill();
+```
+
+Also you can use chaining (Linq) style:
+```c#
+tween.SetEase(Ease.Linear).SetIgnoreTimeScale(true).OnComplete(doSomething);
 ```
 
 Under the hood `FastTween` call static methods of `FastTweener` class, so you can use it too. It is the same
