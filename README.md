@@ -13,8 +13,11 @@ Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">
 # Benchmarks
 
 Benchmarks was measured on Apple MacBook Pro 2017.
+
 It was created to show memory allocation difference.
+
 Time metrics is not super-accurate and made only to ensure it not slower than DoTween. 
+
 You can reapeat measures by yourself, all sources are in Benchmark folder.
 
 <details><summary><b><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings</b></summary>
@@ -435,7 +438,7 @@ settings.CriticalFpsToLogWarning = 30;
 FastTweener.Init(settings);
 ```
 
-If you don't do that `FastTweener` will be auto-initialized with the default settings.
+If you don't do that `FastTweener` will be auto-initialized with the default settings. To get initialization status use `bool FastTweener.IsInitialized` property.
 
 **WARNING: If you want to use manual initialization you need to do that before creating your first Tween!**
 
@@ -525,15 +528,91 @@ transform.TweenMove(vectorTo, duration, true, OnComplete);
 
 ## Work with tween
 
-You can set tween parameters after tween creation. To make it you should save `FastTween` instance during Tween creation and call his methods. 
+You can get or set Tween parameters after tween creation. To make it you should save `FastTween` instance during Tween creation and call his methods.
+
 ```c#
 FastTween tween = transform.TweenLocalMoveY(floatTo, duration);
 
+uint id = tween.Id;
+
+Ease ease = tween.GetEase();
+tween.SetEase(Ease.InCirc);
+
+bool ignoreTimeScale = tween.GetIgnoreTimeScale();
+tween.SetIgnoreTimeScale(true);
+
+tween.OnComplete(() => Debug.Log("Done!"));
+
+bool isAlive = tween.IsAlive();
+tween.Kill();
+```
+
+Under the hood `FastTween` call static methods of `FastTweener` class, so you can use it too. It is the same
+```c#
+FastTween tween = transform.TweenLocalMoveY(floatTo, duration);
+
+Ease ease = FastTweener.GetEase(tween);
+FastTweener.SetEase(tween, Ease.InCirc);
+
+bool ignoreTimeScale = FastTweener.GetIgnoreTimeScale(tween);
+FastTweener.SetIgnoreTimeScale(tween,true);
+
+FastTweener.SetOnComplete(tween,() => Debug.Log("Done!"));
+
+bool isAlive = FastTweener.IsAlive(tween);
+FastTweener.Kill(tween);
 ```
 
 **WARNING: Read [Performance hints](#performance-hints) before use it for best performans!**
 
-Other docs are coming soon...
+
+## Ease Types
+
+To set Default Ease that was set in the settings during [Initialization](#initialize) use `tween.SetEase(Ease.Default)`.
+
+You can use one of next Eases:
+* Linear
+* InSine
+* OutSine
+* InOutSine
+* InQuad
+* OutQuad
+* InOutQuad
+* InCubic
+* OutCubic
+* InOutCubic
+* InQuart
+* OutQuart
+* InOutQuart
+* InQuint
+* OutQuint
+* InOutQuint
+* InExpo
+* OutExpo
+* InOutExpo
+* InCirc
+* OutCirc
+* InOutCirc
+* InElastic
+* OutElastic
+* InOutElastic
+* InBack
+* OutBack
+* InOutBack
+* InBounce
+* OutBounce
+* InOutBounce
+
+Formulas for simple eases were found at [gizma.com](http://gizma.com/easing/#l) (Action Script 3)
+
+Bounce Eases from [tweenman-as3](https://github.com/danro/tweenman-as3) GitHub repository (Action Script 3)
+
+Elastic and Back formulas taked from here [processing penner easing](https://github.com/jesusgollonet/processing-penner-easing) GitHub repository (Java)
+
+
+## Monitoring
+
+Coming soon...
 
 
 # Performance hints
