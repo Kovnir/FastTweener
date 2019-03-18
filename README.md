@@ -437,7 +437,7 @@ FastTweener.Init(settings);
 
 If you don't do that `FastTweener` will be auto-initialized with the default settings.
 
-**WARNING: If you want to use manual initialization you need to do that before creating your first tween!**
+**WARNING: If you want to use manual initialization you need to do that before creating your first Tween!**
 
 ## Create a Tween
 
@@ -478,17 +478,50 @@ rigidbody.TweenMoveZ(floatTo, duration);
 rigidbody.TweenRotate(vectorTo, duration);
 ```
 
-Each method contains required parametrs:
+Each method has required parametrs:
+```c#
+T endValue              //finish value of tween. Vector3 or float depends on method
+float duration          //duration of Tween in seconds
 
-endValue,
-float duration,
+Only for Tweens created via FastTweener class:
 
-And optional optional:
-Ease ease - default one you set in Init, or OutQuad if you didn't set it 
-bool ignoreTimescale - default false,
-Action onComplete - callback will called when tween completed
+T startValue            //finish value of tween. Vector3 or float depends on method
+Action<T> callback      //Action<Vector3> or Action<float> depends on method
+```
 
+And optional paramert:
+```c#
+Ease ease               //(default one you set in Init, or OutQuad if you didn't set it)
+bool ignoreTimescale    //Should Tween ignire timescale (default false)
+Action onComplete       //callback will called when tween completed (default null)
+```
 
+`FastTweener.Schedule` is only exception. It contains only three parametrs:
+```c#
+float delay             //Delay before Action executing
+Action callback         //Action to execute after Delay
+bool ignoreTimescale    //Should Tween ignore timescale (default false)
+```
+
+Each methods contains overloads for each combination of optional parametrs. For example:
+```c#
+//No optional parameters
+transform.TweenMove(vectorTo, duration);
+//One parameter:
+//ease
+transform.TweenMove(vectorTo, duration, Ease.InElastic);
+//ignoreTimescale
+transform.TweenMove(vectorTo, duration, true);
+//onComplete
+transform.TweenMove(vectorTo, duration, OnComplete);
+//Parameters combinations:
+//ease & ignoreTimescale
+transform.TweenMove(vectorTo, duration, Ease.InElastic, true);
+//ease & onComplete
+transform.TweenMove(vectorTo, duration, Ease.InElastic, OnComplete);
+//ignoreTimescale & onComplete
+transform.TweenMove(vectorTo, duration, true, OnComplete);
+```
 
 
 
