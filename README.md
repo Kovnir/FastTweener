@@ -531,7 +531,7 @@ FastTween tween = transform.TweenLocalMoveY(floatTo, duration);
 
 ```
 
-Warning: 
+**WARNING: Read [Performance hints](#performance-hints) before use it for best performans!**
 
 Other docs are coming soon...
 
