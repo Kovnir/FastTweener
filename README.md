@@ -523,14 +523,22 @@ transform.TweenMove(vectorTo, duration, Ease.InElastic, OnComplete);
 transform.TweenMove(vectorTo, duration, true, OnComplete);
 ```
 
+## Work with tween
 
+You can set tween parameters after tween creation. To make it you should save `FastTween` instance during Tween creation and call his methods. 
+```c#
+FastTween tween = transform.TweenLocalMoveY(floatTo, duration);
+
+```
+
+Warning: 
 
 Other docs are coming soon...
 
 
 # Performance hints
 
-`FastTween` is a just struct with tween id. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a tween task in the tween tasks list. But when you send this parameters during a tween creating it will not take additional time.
+`FastTween` is a just struct with `Tween Task` id. We can't set instance of `Tween Task` to `FastTween` instance becouse in future this tween will be used for another Tweens. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a `Tween Task` in the `Tween Tasks` list. But when you send this parameters during a tween creating it will not take additional time.
 
 For example this code is faster:
 ```c#
@@ -541,4 +549,37 @@ Than this code:
 FastTween tween = FastTweener.Float(-3, 3, 0.5f, value => DoSomething);
 tween.SetEase(Ease.OutBounce);
 tween.OnComplete(OnComplete);
+```
+
+For the same reasons, recieving data from `FastTween` can be not so fast as we want. So, will be better to cache Tween paramerts if it possible.
+
+For example this code is faster:
+```c#
+private Ease tweenEase;
+public void SomeMethod(FastTween someTween)
+{
+    tweenEase = someTween.GetEase();
+}
+public void Update()
+{
+    if (tweenEase == Ease.Linear)
+    {
+        //Do some logic
+    }
+}
+```
+Than this code:
+```c#
+private FastTween tween;
+public void SomeMethod(FastTween someTween)
+{
+    tween = someTween;
+}
+public void Update()
+{
+    if (tween.GetEase() == Ease.Linear)
+    {
+        //Do some logic
+    }
+}
 ```
