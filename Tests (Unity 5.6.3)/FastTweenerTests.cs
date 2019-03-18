@@ -33,7 +33,7 @@ public class FastTweenerTests
     public IEnumerator PoolSize()
     {
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), 16);
-        Assert.AreEqual(taskManager.GetActiveTasksCount(), 0);
+        Assert.AreEqual(taskManager.GetAliveTasksCount(), 0);
 
         List<FastTween> fastTweens = new List<FastTween>();
         for (int i = 0; i < 20; i++)
@@ -46,7 +46,7 @@ public class FastTweenerTests
             }
 
             Assert.AreEqual(taskManager.GetTasksInPoolCount(), countInPool, "i == " + i);
-            Assert.AreEqual(taskManager.GetActiveTasksCount(), i + 1, "i == " + i);
+            Assert.AreEqual(taskManager.GetAliveTasksCount(), i + 1, "i == " + i);
         }
 
         for (int i = 0; i < 20; i++)
@@ -54,7 +54,7 @@ public class FastTweenerTests
             fastTweens[i].Kill();
             yield return null; //need to wait frame to process kill task
             Assert.AreEqual(taskManager.GetTasksInPoolCount(), i + 1, "i == " + i);
-            Assert.AreEqual(taskManager.GetActiveTasksCount(), 20 - (i + 1), "i == " + i);
+            Assert.AreEqual(taskManager.GetAliveTasksCount(), 20 - (i + 1), "i == " + i);
         }
     }
 
@@ -113,24 +113,24 @@ public class FastTweenerTests
     public void ScheduleNull()
     {
         var inPool = taskManager.GetTasksInPoolCount();
-        var active = taskManager.GetActiveTasksCount();
+        var alive = taskManager.GetAliveTasksCount();
         LogAssert.Expect(LogType.Error, "FastTweener: Callback is null!");
         var tween = FastTweener.Schedule(1, null);
         Assert.AreEqual(tween.Id, 0);
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
-        Assert.AreEqual(taskManager.GetActiveTasksCount(), active);
+        Assert.AreEqual(taskManager.GetAliveTasksCount(), alive);
     }
 
     [Test]
     public void FloatNull()
     {
         var inPool = taskManager.GetTasksInPoolCount();
-        var active = taskManager.GetActiveTasksCount();
+        var alive = taskManager.GetAliveTasksCount();
         LogAssert.Expect(LogType.Error, "FastTweener: Callback is null!");
         var tween = FastTweener.Float(0, 1, 3, null);
         Assert.AreEqual(tween.Id, 0);
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
-        Assert.AreEqual(taskManager.GetActiveTasksCount(), active);
+        Assert.AreEqual(taskManager.GetAliveTasksCount(), alive);
     }
 
     [UnityTest]
@@ -153,13 +153,13 @@ public class FastTweenerTests
         var tween = FastTweener.Float(0, 1, 1, f => { throw new Exception(); }, () => done = true);
 
         Assert.False(done);
-        Assert.IsTrue(tween.IsActive());
+        Assert.IsTrue(tween.IsAlive());
         yield return new WaitForSecondsRealtime(0.5f);
         Assert.False(done);
-        Assert.IsTrue(tween.IsActive());
+        Assert.IsTrue(tween.IsAlive());
         yield return new WaitForSecondsRealtime(0.5f);
         Assert.True(done);
-        Assert.IsFalse(tween.IsActive());
+        Assert.IsFalse(tween.IsAlive());
     }
 
     [UnityTest]
@@ -171,33 +171,33 @@ public class FastTweenerTests
         Assert.AreNotEqual(tween.Id, 0);
         Assert.AreEqual(value, 0);
 
-        Assert.IsTrue(tween.IsActive());
+        Assert.IsTrue(tween.IsAlive());
         LogAssert.ignoreFailingMessages = true;
         yield return new WaitForSeconds(0.5f);
         Assert.AreEqual(value, 1);
-        Assert.IsFalse(tween.IsActive());
+        Assert.IsFalse(tween.IsAlive());
     }
 
     [UnityTest]
-    public IEnumerator KillIsActive()
+    public IEnumerator KillIsAlive()
     {
         var inPool = taskManager.GetTasksInPoolCount();
-        var active = taskManager.GetActiveTasksCount();
+        var alive = taskManager.GetAliveTasksCount();
         var tween = FastTweener.Float(0, 1, 5, f => { }, () => { });
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool - 1);
-        Assert.AreEqual(taskManager.GetActiveTasksCount(), active + 1);
+        Assert.AreEqual(taskManager.GetAliveTasksCount(), alive + 1);
         Assert.AreNotEqual(tween.Id, 0);
-        Assert.True(tween.IsActive());
+        Assert.True(tween.IsAlive());
         tween.Kill();
         yield return null;
-        Assert.False(tween.IsActive());
+        Assert.False(tween.IsAlive());
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
-        Assert.AreEqual(taskManager.GetActiveTasksCount(), active);
+        Assert.AreEqual(taskManager.GetAliveTasksCount(), alive);
 
         tween.Kill(); //kill killed is ok
-        Assert.False(tween.IsActive());
+        Assert.False(tween.IsAlive());
         Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
-        Assert.AreEqual(taskManager.GetActiveTasksCount(), active);
+        Assert.AreEqual(taskManager.GetAliveTasksCount(), alive);
     }
 
     [UnityTest]

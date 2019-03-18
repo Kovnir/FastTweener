@@ -11,12 +11,18 @@ namespace Kovnir.FastTweener
 
         private static FastTweenerComponent instance;
 
+        public static bool IsInitialized
+        {
+            get { return instance != null; }
+        }
+        
         public static void Init()
         {
-            if (instance != null)
+            if (IsInitialized)
             {
                 return;
             }
+
             instance = new GameObject().AddComponent<FastTweenerComponent>();
             instance.name = "FastTweener";
             DontDestroyOnLoad(instance);
@@ -64,9 +70,9 @@ namespace Kovnir.FastTweener
             taskManager.Kill(tween.Id);
         }
         
-        private bool IsActiveInternal(FastTween tween)
+        private bool IsAliveInternal(FastTween tween)
         {
-            return taskManager.IsActive(tween.Id);
+            return taskManager.IsAlive(tween.Id);
         }
         
         private void SetEaseInternal(FastTween tween, Ease ease)
@@ -126,11 +132,11 @@ namespace Kovnir.FastTweener
             }
         }
 
-        public static bool IsActive(FastTween tween)
+        public static bool IsAlive(FastTween tween)
         {
             if (instance != null)
             {
-                return instance.IsActiveInternal(tween);
+                return instance.IsAliveInternal(tween);
             }
             return false;
         }
@@ -178,18 +184,18 @@ namespace Kovnir.FastTweener
         }
 
         //for editor
-        public static void GetEditorData(out bool inited, out int tasksInPool, out int activeTasks)
+        public static void GetEditorData(out bool inited, out int tasksInPool, out int aliveTasks)
         {
             inited = instance != null;
             if (inited)
             {
                 tasksInPool = taskManager.GetTasksInPoolCount();
-                activeTasks = taskManager.GetActiveTasksCount();
+                aliveTasks = taskManager.GetAliveTasksCount();
             }
             else
             {
                 tasksInPool = 0;
-                activeTasks = 0;
+                aliveTasks = 0;
             }
         }
     }

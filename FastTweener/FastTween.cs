@@ -19,11 +19,11 @@ namespace Kovnir.FastTweener
             }
         }
 
-        public bool IsActive()
+        public bool IsAlive()
         {
             if (Id != 0)
             {
-                return FastTweener.IsActive(this);
+                return FastTweener.IsAlive(this);
             }
             return false;
         }

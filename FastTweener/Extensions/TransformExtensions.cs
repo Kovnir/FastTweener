@@ -181,7 +181,6 @@ namespace Kovnir.FastTweener.Extension
             return toReturn;
         }
 
-
         //ease ignoreTimescale onComplete        
         public static FastTween TweenMove(this Transform target, Vector3 endValue, float duration, Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)
         {
