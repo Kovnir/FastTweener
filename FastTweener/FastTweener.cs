@@ -20,7 +20,7 @@ namespace Kovnir.FastTweener
             }
         }
 
-        private static bool IsInitialized
+        public static bool IsInitialized
         {
             get { return FastTweenerComponent.IsInitialized; }
         }
