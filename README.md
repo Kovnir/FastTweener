@@ -8,18 +8,18 @@
 Will be released in AssetStore soon.
 
 
-Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is realy powerfull and userfreandly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, becouse **DoTween is allocate a lot of memory**. This is not connected with pooling (DoTween has good recycling system), but with that DoTween allocate a memory while working.
+Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is a really powerfull and user-friendly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, because **DoTween allocate a lot of memory**. This is connected not with pooling (DoTween has a good recycling system), but with DoTween allocate memory while working.
 
 
 # Benchmarks
 
-Benchmarks was measured on Apple MacBook Pro 2017.
+Benchmarks were measured on Apple MacBook Pro 2017.
 
-It was created to show memory allocation difference.
+It was created to show the difference of memory allocation.
 
-Time metrics is not super-accurate and made only to ensure it not slower than DoTween. 
+Time metrics aren’t super-accurate and made only to make sure that doesn't slower than DoTween.
 
-You can reapeat measures by yourself, all sources are in Benchmark folder.
+You can repeat measures by yourself, all sources are in `Benchmark` folder.
 
 <details><summary><b><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings</b></summary>
 
@@ -400,7 +400,7 @@ First and second call has a big difference in measures.
 <br>
 
 
-So, if you don't need all power of DoTween and your goal is memory allocation optimisation - this is plugin for you!
+So, if you don't need all power of DoTween and your goal is memory allocation optimization - this plugin is made for you!
 
 
 
@@ -442,7 +442,7 @@ FastTweener.Init(settings);
 
 If you don't do that `FastTweener` will be auto-initialized with the default settings. To get initialization status use `bool FastTweener.IsInitialized` property.
 
-**WARNING: If you want to use manual initialization you need to do that before creating your first Tween!**
+**WARNING: If you want to use manual initialization you need to do it before creating your first Tween!**
 
 ## Create a Tween
 
@@ -453,7 +453,7 @@ FastTweener.Float(floatFrom, floatTo, duration, x => { /* Your logic here */ });
 FastTweener.Vector3(vectorFrom, vectorTo, duration, x => { /* Your logic here */ });
 FastTweener.Schedule(delay, () => { /* Your logic here */ });
 ```
-* Using Extentions for Transform class
+* Using Extensions for Transform class
 ```c#
 transform.TweenMove(vectorTo, duration);
 transform.TweenMoveX(floatTo, duration);
@@ -473,7 +473,7 @@ transform.TweenScaleZ(floatTo, duration);
 transform.TweenRotate(vectorTo, duration);
 transform.TweenLocalRotate(vectorTo, duration);
 ```
-* Using Extentions for Rigidbody class
+* Using Extensions for Rigidbody class
 ```c#
 rigidbody.TweenMove(vectorTo, duration);
 rigidbody.TweenMoveX(floatTo, duration);
@@ -483,11 +483,11 @@ rigidbody.TweenMoveZ(floatTo, duration);
 rigidbody.TweenRotate(vectorTo, duration);
 ```
 
-All extensions methods made without closure and don't allocate memory too.
+All extension methods made without closure and don't allocate memory too.
 
-When you create a Tween it will play automatically.
+When you create a Tween it will start to play automatically.
 
-Each method has required parametrs:
+Each method has required parameters:
 ```c#
 T endValue              //finish value of tween. Vector3 or float depends on method
 float duration          //duration of Tween in seconds
@@ -498,7 +498,7 @@ T startValue            //finish value of tween. Vector3 or float depends on met
 Action<T> callback      //Action<Vector3> or Action<float> depends on method
 ```
 
-And optional paramert:
+And optional parameter:
 ```c#
 Ease ease               //(default one you set in Init, or OutQuad if you didn't set it)
 bool ignoreTimescale    //Should Tween ignire timescale (default false)
@@ -512,7 +512,7 @@ Action callback         //Action to execute after Delay
 bool ignoreTimescale    //Should Tween ignore timescale (default false)
 ```
 
-Each methods contains overloads for each combination of optional parametrs. For example:
+Each method contains overloads for each combination of optional parameters. For example:
 ```c#
 //No optional parameters
 transform.TweenMove(vectorTo, duration);
@@ -532,9 +532,9 @@ transform.TweenMove(vectorTo, duration, Ease.InElastic, OnComplete);
 transform.TweenMove(vectorTo, duration, true, OnComplete);
 ```
 
-## Work with tween
+## Work with Tween
 
-You can get or set Tween parameters after tween creation. To make it you should save `FastTween` instance during Tween creation and call his methods.
+You can get or set Tween parameters after Tween creation. To make it you should save `FastTween` instance during Tween creation and call his methods.
 
 ```c#
 FastTween tween = transform.TweenLocalMoveY(floatTo, duration);
@@ -558,7 +558,7 @@ Also you can use chaining (Linq) style:
 tween.SetEase(Ease.Linear).SetIgnoreTimeScale(true).OnComplete(doSomething);
 ```
 
-Under the hood `FastTween` call static methods of `FastTweener` class, so you can use it too. It is the same
+Under the hood `FastTween` call static methods of `FastTweener` class, so you can use it too. It is the same.
 ```c#
 FastTween tween = transform.TweenLocalMoveY(floatTo, duration);
 
@@ -574,14 +574,14 @@ bool isAlive = FastTweener.IsAlive(tween);
 FastTweener.Kill(tween);
 ```
 
-**WARNING: Read [Performance hints](#performance-hints) before use it for best performans!**
+**WARNING: Read [Performance hints](#performance-hints) before using this methods for the best performance!**
 
 
 ## Ease Types
 
 To set Default Ease that was set in the settings during [Initialization](#initialize) use `tween.SetEase(Ease.Default)`.
 
-You can use one of next Eases:
+You can use one of the next Eases:
 * Linear
 * InSine
 * OutSine
@@ -618,7 +618,7 @@ Formulas for simple eases were found at [gizma.com](http://gizma.com/easing/#l) 
 
 Bounce Eases from [tweenman-as3](https://github.com/danro/tweenman-as3) GitHub repository (Action Script 3)
 
-Elastic and Back formulas taked from here [processing penner easing](https://github.com/jesusgollonet/processing-penner-easing) GitHub repository (Java)
+Elastic and Back formulas were taken from here [processing penner easing](https://github.com/jesusgollonet/processing-penner-easing) GitHub repository (Java)
 
 
 ## Monitoring
@@ -626,11 +626,11 @@ Elastic and Back formulas taked from here [processing penner easing](https://git
 Coming soon...
 
 
-# Performance hints
+# Performance Hints
 
-`FastTween` is a just struct with `Tween Task` id. We can't set instance of `Tween Task` to `FastTween` instance becouse in future this tween will be used for another Tweens. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a `Tween Task` in the `Tween Tasks` list. But when you send this parameters during a tween creating it will not take additional time.
+`FastTween` is just a struct with `Tween Task` id. We can't set instance of `Tween Task` to `FastTween` instance because in future this Tween will be used for another Tween. So all functions `IsActive`, `GetEase`, `SetEase`, `GetIgnoreTimeScale`, `SetIgnoreTimeScale`, and `OnComplete` required to find a `Tween Task` in the `Tween Tasks` list. But when you send these parameters during a Tween creating it won't take additional time.
 
-For example this code is faster:
+For example, this code is faster:
 ```c#
 FastTween tween = FastTweener.Float(-3, 3, 0.5f, value => DoSomething, Ease.OutBounce, OnComplete);
 ```
@@ -641,9 +641,9 @@ tween.SetEase(Ease.OutBounce);
 tween.OnComplete(OnComplete);
 ```
 
-For the same reasons, recieving data from `FastTween` can be not so fast as we want. So, will be better to cache Tween paramerts if it possible.
+For the same reasons, receiving data from `FastTween` can be not so fast as we want. So, it will be better to cache Tween parameters if it’s possible.
 
-For example this code is faster:
+For example, this code is faster:
 ```c#
 private Ease tweenEase;
 public void SomeMethod(FastTween someTween)
