@@ -632,7 +632,9 @@ Elastic and Back formulas were taken from here [processing penner easing](https:
 
 ## Monitoring
 
-Coming soon...
+`Real-time Monitoring` allow you to see the actual count of alive Tweens and count of Tweens in the pool. To see this data find GameObject with name `FastTweener` in the root of `DontDestroyOnLoad` section in the `Hierarchy` window during the Play mode.
+
+<img width="700" src="Documentation/monitoring.gif">
 
 
 # Performance Hints
