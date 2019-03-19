@@ -8,7 +8,7 @@
 Will be released in AssetStore soon.
 
 
-Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. This is a really powerfull and user-friendly tween engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, because **DoTween allocate a lot of memory**. This is connected not with pooling (DoTween has a good recycling system), but with DoTween allocate memory while working.
+Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. DoTween is a really powerfull and user-friendly Tween Engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, because **DoTween allocate a lot of memory**. This is connected not with pooling (DoTween has a good recycling system), but with DoTween allocate memory while working.
 
 
 # Benchmarks
@@ -32,7 +32,7 @@ You can repeat measures by yourself, all sources are in `Benchmark` folder.
    
    <tr>
    <td rowspan="2" ><i>DoTween.Init()</i> vs <i>FastTween.Init()</i> with default settings
-      <br><sub>For FastTween used pool with 16 base tweens + 16 rigidbody tweens + 16 transform tweens.
+      <br><sub>For FastTween used a pool with 16 base Tweens + 16 rigidbody Tweens + 16 transform Tweens.
       <br>DoTween initialisation containce from <i>DoTween.Init()</i>, <i>DoTween..cctor()</i>, and <i>TweenManager..cctor()</i></sub></td>
    <td>Memory<br>(kb)</td>
    <td>7,9</td>
@@ -203,7 +203,7 @@ First and second call has a big difference in measures.
 
 
    <tr>
-   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
+   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule Tween</td>
    <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
@@ -285,7 +285,7 @@ First and second call has a big difference in measures.
 
 
    <tr>
-   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
+   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule Tween</td>
    <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
@@ -367,7 +367,7 @@ First and second call has a big difference in measures.
 
 
    <tr>
-   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule tween</td>
+   <td rowspan="2"><i>BehaviourUpdate</i> with worked schedule Tween</td>
    <td>Memory<br>(kb)</td>
    <td>0</td>
    <td>0</td>
@@ -426,23 +426,23 @@ You can initialize `FastTweener` to setup some global options:
 ```c#
 FastTweenerSettings settings = new FastTweenerSettings();
 
-//this ease will be used for each tween if nothing another ease set explicitly
-settings.DefaultEase = Ease.OutQuad;
+//this ease will be used for each Tween if nothing another ease set explicitly
+settings.DefaultEase = Ease.Linear; //default - Ease.OutQuad
 
 //size of the pool of the Transform extensions like transform.TweenScale();
-settings.TransformExtensionsPoolSize = 16;
+settings.TransformExtensionsPoolSize = 32; //default - 16
 
 //size of the pool of the Rigidbody extensions like rigidbody.TweenMove();
-settings.RigidbodyExtensionsPoolSize = 16;
+settings.RigidbodyExtensionsPoolSize = 32; //default - 16
 
 //size of the pool of the general Tweens (common + extensions)
-settings.TaskPoolSize = 16;
+settings.TaskPoolSize = 32; //default - 16
 
 //if true - FastTweener will write a name of the GameObject in Errors, but it will allocate addition memory
-settings.SaveGameObjectName = false;
+settings.SaveGameObjectName = true; //default - false 
 
-//FastTweener will write Warnings if actual fps is lower then this value and tweens late. Set 0 to disable Warnings
-settings.CriticalFpsToLogWarning = 30;
+//FastTweener will write Warnings if actual fps is lower then this value and Tweens late. Set 0 to disable Warnings
+settings.CriticalFpsToLogWarning = 50; //default - 30 
 
 FastTweener.Init(settings);
 ```
@@ -496,12 +496,12 @@ When you create a Tween it will start to play automatically.
 
 Each method has required parameters:
 ```c#
-T endValue              //finish value of tween. Vector3 or float depends on the specific method
+T endValue              //finish value of Tween. Vector3 or float depends on the specific method
 float duration          //duration of Tween in seconds
 
 // Only for Tweens created via FastTweener class:
 
-T startValue            //finish value of tween. Vector3 or float depends on the specific method
+T startValue            //finish value of Tween. Vector3 or float depends on the specific method
 Action<T> callback      //Action<Vector3> or Action<float> depends on the specific method
 ```
 
@@ -509,7 +509,7 @@ And optional parameter:
 ```c#
 Ease ease               //ease for tweening (default one you set in Init, or OutQuad if you didn't set it)
 bool ignoreTimescale    //should Tween ignore timescale (default false)
-Action onComplete       //the callback will be called when tween completed (default null)
+Action onComplete       //the callback will be called when Tween completed (default null)
 ```
 
 `FastTweener.Schedule` is the only exception. It contains only three parameters:
