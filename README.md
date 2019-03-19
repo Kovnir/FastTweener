@@ -422,21 +422,28 @@ using DG.Tweening;
 ### Initialize
 
 You can initialize `FastTweener` to setup some global options:
-
+ 
 ```c#
 FastTweenerSettings settings = new FastTweenerSettings();
-//this ease will used for each tween if nothing else set explicitly
+
+//this ease will be used for each tween if nothing another ease set explicitly
 settings.DefaultEase = Ease.OutQuad;
-//size of pool for Transform extensions, like tranform.TweenScale();
+
+//size of the pool of the Transform extensions like transform.TweenScale();
 settings.TransformExtensionsPoolSize = 16;
-//size of pool for Rigidbody extensions, like rigidbody.TweenMove();
+
+//size of the pool of the Rigidbody extensions like rigidbody.TweenMove();
 settings.RigidbodyExtensionsPoolSize = 16;
-//size of pool of general Tweens (common + extensions)
+
+//size of the pool of the general Tweens (common + extensions)
 settings.TaskPoolSize = 16;
-//if true - FastTweener will write name of GameObject in Errors, but it will allocate addition memory
+
+//if true - FastTweener will write a name of the GameObject in Errors, but it will allocate addition memory
 settings.SaveGameObjectName = false;
+
 //FastTweener will write Warnings if actual fps is lower then this value and tweens late. Set 0 to disable Warnings
 settings.CriticalFpsToLogWarning = 30;
+
 FastTweener.Init(settings);
 ```
 
