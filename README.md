@@ -496,33 +496,34 @@ When you create a Tween it will start to play automatically.
 
 Each method has required parameters:
 ```c#
-T endValue              //finish value of tween. Vector3 or float depends on method
+T endValue              //finish value of tween. Vector3 or float depends on the specific method
 float duration          //duration of Tween in seconds
 
-Only for Tweens created via FastTweener class:
+// Only for Tweens created via FastTweener class:
 
-T startValue            //finish value of tween. Vector3 or float depends on method
-Action<T> callback      //Action<Vector3> or Action<float> depends on method
+T startValue            //finish value of tween. Vector3 or float depends on the specific method
+Action<T> callback      //Action<Vector3> or Action<float> depends on the specific method
 ```
 
 And optional parameter:
 ```c#
-Ease ease               //(default one you set in Init, or OutQuad if you didn't set it)
-bool ignoreTimescale    //Should Tween ignire timescale (default false)
-Action onComplete       //callback will called when tween completed (default null)
+Ease ease               //ease for tweening (default one you set in Init, or OutQuad if you didn't set it)
+bool ignoreTimescale    //should Tween ignore timescale (default false)
+Action onComplete       //the callback will be called when tween completed (default null)
 ```
 
-`FastTweener.Schedule` is only exception. It contains only three parametrs:
+`FastTweener.Schedule` is the only exception. It contains only three parameters:
 ```c#
-float delay             //Delay before Action executing
-Action callback         //Action to execute after Delay
-bool ignoreTimescale    //Should Tween ignore timescale (default false)
+float delay             //delay before Action executing
+Action callback         //action to execute after Delay
+bool ignoreTimescale    //should Tween ignore timescale (default false)
 ```
 
 Each method contains overloads for each combination of optional parameters. For example:
 ```c#
 //No optional parameters
 transform.TweenMove(vectorTo, duration);
+
 //One parameter:
 //ease
 transform.TweenMove(vectorTo, duration, Ease.InElastic);
@@ -530,6 +531,7 @@ transform.TweenMove(vectorTo, duration, Ease.InElastic);
 transform.TweenMove(vectorTo, duration, true);
 //onComplete
 transform.TweenMove(vectorTo, duration, OnComplete);
+
 //Parameters combinations:
 //ease & ignoreTimescale
 transform.TweenMove(vectorTo, duration, Ease.InElastic, true);
