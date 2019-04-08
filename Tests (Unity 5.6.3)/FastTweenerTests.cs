@@ -16,7 +16,7 @@ public class FastTweenerTests
     private FastTweenerComponent fastTweenerComponent;
     private TaskManager taskManager;
 
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
         FastTweener.Init();
@@ -25,7 +25,6 @@ public class FastTweenerTests
             typeof(FastTweenerComponent).GetField("taskManager", BindingFlags.Static | BindingFlags.NonPublic);
 
         taskManager = (TaskManager) myFieldInfo.GetValue(fastTweenerComponent);
-
     }
 
     [UnityTest]
