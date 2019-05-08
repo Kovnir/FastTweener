@@ -416,7 +416,7 @@ You can download `FastTweener` from this repository or from AssetStore (coming s
 
 To use `FastTweener` you need to add namespace in each class where you want to use it.
 ```c#
-using DG.Tweening;
+using Kovnir.FastTweener;
 ```
 
 ### Initialize
