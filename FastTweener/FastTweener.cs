@@ -1,5 +1,4 @@
 ﻿using System;
-using Kovnir.FastTweener.Extension;
 using UnityEngine;
 
 namespace Kovnir.FastTweener

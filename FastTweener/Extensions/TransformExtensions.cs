@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Kovnir.FastTweener.Extension
+namespace Kovnir.FastTweener
 {
     public static class TransformExtensions
     {
