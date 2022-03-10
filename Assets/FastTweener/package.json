@@ -2,7 +2,7 @@
     "name": "com.kovnir.fasttweener",
     "displayName": "FastTweener",
     "description": "Code-based Tween Engine entirely without memory allocation!",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "unity": "2018.3",
     "dependencies": {}
 }

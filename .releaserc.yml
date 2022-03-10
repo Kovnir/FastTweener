@@ -1,0 +1,12 @@
+plugins:
+  - '@semantic-release/release-notes-generator'
+  - '@semantic-release/commit-analyzer'
+  - - '@semantic-release/changelog'
+    - changelogFile: 'Assets/FastTweener/CHANGELOG.md'
+  - - '@semantic-release/npm'
+    - npmPublish: false
+      pkgRoot: "Assets/FastTweener"
+  - - '@semantic-release/git'
+    - assets:
+        - 'Assets/FastTweener/**'
+tagFormat: "release-v${version}"
