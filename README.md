@@ -5,7 +5,7 @@
 
 **FastTweener** - is a one more simple tweener, but **entirely without memory allocation**!
 
-Will be released in AssetStore soon.
+Available on <a href="https://assetstore.unity.com/packages/tools/animation/fasttweener-142403" target="_blank">Unity Asset Store</a>.
 
 
 Source of inspiration - <a href="http://dotween.demigiant.com/" target="_blank">DoTween</a>. DoTween is a really powerfull and user-friendly Tween Engine, we use it and love it. But when we faced with extra memory allocation problem we decide to make our own solution, because **DoTween allocate a lot of memory**. This is connected not with pooling (DoTween has a good recycling system), but with DoTween allocate memory while working.
