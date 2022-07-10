@@ -1,0 +1,44 @@
+name: CI
+on:
+  push:
+    branches:
+    - master
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Release
+      id: semantic
+      uses: cycjimmy/semantic-release-action@v2
+      with:
+        extra_plugins: |
+          @mob-sakai/semantic-release-git-snapshot
+          @semantic-release/changelog
+          @semantic-release/git
+        branch: master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: fusion-engineering/setup-git-credentials@v2
+      with:
+        credentials: https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/
+
+    - name: Create upm branch
+      run: |
+        git branch -d upm &> /dev/null || echo upm branch not found
+        git subtree split -P "$PKG_ROOT" -b upm
+        git checkout upm
+        git push -f -u origin upm
+      env:
+        PKG_ROOT: Assets/FastTweener
+
+    - name: Create upm git tag
+      if: steps.semantic.outputs.new_release_published == 'true'
+      run: |
+        git tag $TAG upm
+        git push origin --tags
+      env:
+        TAG: ${{ steps.semantic.outputs.new_release_version }}
