@@ -10,7 +10,7 @@ namespace Kovnir.FastTweener
 
         private static FastTweenerComponent instance;
 
-        public static void Init()
+        public static void Init(bool dontDestroyOnLoad = true)
         {
             if (instance != null)
             {
@@ -19,7 +19,11 @@ namespace Kovnir.FastTweener
             Debug.Log("FastTweenerComponent: Init");
             instance = new GameObject().AddComponent<FastTweenerComponent>();
             instance.name = "FastTweener";
-            DontDestroyOnLoad(instance);
+            if (dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(instance);
+            }
+
             taskManager = new TaskManager(FastTweener.Setting.TaskPoolSize); 
         }
 

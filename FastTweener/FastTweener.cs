@@ -21,7 +21,7 @@ namespace Kovnir.FastTweener
 
         private static bool inited;
         
-        public static void Init(FastTweenerSettings settings = null)
+        public static void Init(FastTweenerSettings settings = null, bool dontDestroyOnLoad = true)
         {
             if (inited)
             {
@@ -33,7 +33,7 @@ namespace Kovnir.FastTweener
                 FastTweener.settings = settings;
             }
 
-            FastTweenerComponent.Init();
+            FastTweenerComponent.Init(dontDestroyOnLoad);
         }
         
         public static FastTween Schedule(float delay, Action callback, bool ignoreTimescale = false)
