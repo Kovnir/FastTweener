@@ -1,0 +1,18 @@
+{
+    "name": "FastTweener-Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:55eb0d84816b6c34abe1c36968eb0845"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
