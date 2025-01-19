@@ -1,5 +1,3 @@
-using System;
-
 namespace Kovnir.FastTweener
 {
     public static class FastTweenerStringConstants

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Kovnir.FastTweener.TaskManagment
 {
@@ -13,7 +11,7 @@ namespace Kovnir.FastTweener.TaskManagment
         private static readonly string CATCHED_ERROR = "FastTweener: Exception caught in callback: {0}\n{1}";
 
         private readonly Stack<FastTweenTask> tasksPool;
-        private readonly List<FastTweenTask> aliveTasks;
+        private readonly List<FastTweenTask> activeTasks;
         private HashSet<uint> killedTasks;
         private HashSet<uint> killedTasksSecond;
 
@@ -22,7 +20,7 @@ namespace Kovnir.FastTweener.TaskManagment
         public TaskManager(int size)
         {
             tasksPool = new Stack<FastTweenTask>(size);
-            aliveTasks = new List<FastTweenTask>(size);
+            activeTasks = new List<FastTweenTask>(size);
             killedTasks = new HashSet<uint>();
             killedTasksSecond = new HashSet<uint>();
             for (int i = 0; i < size; i++)
@@ -39,13 +37,13 @@ namespace Kovnir.FastTweener.TaskManagment
             }
         }
 
-        public bool IsAlive(uint id)
+        public bool IsActive(uint id)
         {
             if (!killedTasks.Contains(id))
             {
-                for (int i = 0; i < aliveTasks.Count; i++)
+                for (int i = 0; i < activeTasks.Count; i++)
                 {
-                    if (aliveTasks[i].Id == id)
+                    if (activeTasks[i].Id == id)
                     {
                         return true;
                     }
@@ -59,11 +57,11 @@ namespace Kovnir.FastTweener.TaskManagment
         {
             if (!killedTasks.Contains(id))
             {
-                for (int i = 0; i < aliveTasks.Count; i++)
+                for (int i = 0; i < activeTasks.Count; i++)
                 {
-                    if (aliveTasks[i].Id == id)
+                    if (activeTasks[i].Id == id)
                     {
-                        aliveTasks[i].Ease = ease;
+                        activeTasks[i].Ease = ease;
                     }
                 }
             }
@@ -71,11 +69,11 @@ namespace Kovnir.FastTweener.TaskManagment
 
         public Ease GetEase(uint id)
         {
-            for (int i = 0; i < aliveTasks.Count; i++)
+            for (int i = 0; i < activeTasks.Count; i++)
             {
-                if (aliveTasks[i].Id == id)
+                if (activeTasks[i].Id == id)
                 {
-                    return aliveTasks[i].Ease;
+                    return activeTasks[i].Ease;
                 }
             }
             return FastTweener.Setting.DefaultEase;
@@ -85,11 +83,11 @@ namespace Kovnir.FastTweener.TaskManagment
         {
             if (!killedTasks.Contains(id))
             {
-                for (int i = 0; i < aliveTasks.Count; i++)
+                for (int i = 0; i < activeTasks.Count; i++)
                 {
-                    if (aliveTasks[i].Id == id)
+                    if (activeTasks[i].Id == id)
                     {
-                        aliveTasks[i].IgnoreTimescale = ignoreTimeScale;
+                        activeTasks[i].IgnoreTimescale = ignoreTimeScale;
                     }
                 }
             }
@@ -97,11 +95,11 @@ namespace Kovnir.FastTweener.TaskManagment
 
         public bool GetIgnoreTimeScale(uint id)
         {
-            for (int i = 0; i < aliveTasks.Count; i++)
+            for (int i = 0; i < activeTasks.Count; i++)
             {
-                if (aliveTasks[i].Id == id)
+                if (activeTasks[i].Id == id)
                 {
-                    return aliveTasks[i].IgnoreTimescale;
+                    return activeTasks[i].IgnoreTimescale;
                 }
             }
             return false;
@@ -111,11 +109,11 @@ namespace Kovnir.FastTweener.TaskManagment
         {
             if (!killedTasks.Contains(id))
             {
-                for (int i = 0; i < aliveTasks.Count; i++)
+                for (int i = 0; i < activeTasks.Count; i++)
                 {
-                    if (aliveTasks[i].Id == id)
+                    if (activeTasks[i].Id == id)
                     {
-                        aliveTasks[i].OnComplete = onComplete;
+                        activeTasks[i].OnComplete = onComplete;
                     }
                 }
             }
@@ -137,26 +135,24 @@ namespace Kovnir.FastTweener.TaskManagment
             }
 
             task.Id = id;
-            aliveTasks.Add(task);
+            activeTasks.Add(task);
             return task;
         }
 
         public void Process()
         {
-            var buf = killedTasks;
-            killedTasks = killedTasksSecond; //clean hashset
-            killedTasksSecond = buf; //task we killed in current iteration
-            
+            (killedTasks, killedTasksSecond) = (killedTasksSecond, killedTasks);
+
             var unscaledDeltaTime = Time.unscaledDeltaTime;
             var deltaTime = Time.deltaTime;
-            int count = aliveTasks.Count; //we need to cache this value to start handles new tweens only in next frame
+            int count = activeTasks.Count; //we need to cache this value to start handles new tweens only in next frame
             for (int i = 0; i < count; i++)
             {
-                var task = aliveTasks[i];
+                var task = activeTasks[i];
                 if (killedTasksSecond.Count > 0 && killedTasksSecond.Contains(task.Id))
                 {
                     tasksPool.Push(task);
-                    aliveTasks.RemoveAt(i);
+                    activeTasks.RemoveAt(i);
                     count--;
                     i--;
                     continue;
@@ -184,7 +180,7 @@ namespace Kovnir.FastTweener.TaskManagment
                     }
 
                     tasksPool.Push(task);
-                    aliveTasks.RemoveAt(i);
+                    activeTasks.RemoveAt(i);
                     count--;
                     i--;
                 }
@@ -201,9 +197,9 @@ namespace Kovnir.FastTweener.TaskManagment
             return tasksPool.Count;
         }
 
-        public int GetAliveTasksCount()
+        public int GetActiveTasksCount()
         {
-            return aliveTasks.Count;
+            return activeTasks.Count;
         }
     }
 }

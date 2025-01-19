@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Kovnir.FastTweener
+namespace Kovnir.FastTweener.Extension
 {
     public static class TransformExtensions
     {
@@ -180,6 +180,7 @@ namespace Kovnir.FastTweener
             toReturn.OnComplete = onComplete;
             return toReturn;
         }
+
 
         //ease ignoreTimescale onComplete        
         public static FastTween TweenMove(this Transform target, Vector3 endValue, float duration, Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)

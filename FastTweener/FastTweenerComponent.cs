@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using Kovnir.FastTweener.TaskManagment;
 using UnityEngine;
 
@@ -11,18 +10,13 @@ namespace Kovnir.FastTweener
 
         private static FastTweenerComponent instance;
 
-        public static bool IsInitialized
-        {
-            get { return instance != null; }
-        }
-        
         public static void Init()
         {
-            if (IsInitialized)
+            if (instance != null)
             {
                 return;
             }
-
+            Debug.Log("FastTweenerComponent: Init");
             instance = new GameObject().AddComponent<FastTweenerComponent>();
             instance.name = "FastTweener";
             DontDestroyOnLoad(instance);
@@ -70,9 +64,9 @@ namespace Kovnir.FastTweener
             taskManager.Kill(tween.Id);
         }
         
-        private bool IsAliveInternal(FastTween tween)
+        private bool IsActiveInternal(FastTween tween)
         {
-            return taskManager.IsAlive(tween.Id);
+            return taskManager.IsActive(tween.Id);
         }
         
         private void SetEaseInternal(FastTween tween, Ease ease)
@@ -132,11 +126,11 @@ namespace Kovnir.FastTweener
             }
         }
 
-        public static bool IsAlive(FastTween tween)
+        public static bool IsActive(FastTween tween)
         {
             if (instance != null)
             {
-                return instance.IsAliveInternal(tween);
+                return instance.IsActiveInternal(tween);
             }
             return false;
         }
@@ -184,18 +178,18 @@ namespace Kovnir.FastTweener
         }
 
         //for editor
-        public static void GetEditorData(out bool inited, out int tasksInPool, out int aliveTasks)
+        public static void GetEditorData(out bool inited, out int tasksInPool, out int activeTasks)
         {
             inited = instance != null;
             if (inited)
             {
                 tasksInPool = taskManager.GetTasksInPoolCount();
-                aliveTasks = taskManager.GetAliveTasksCount();
+                activeTasks = taskManager.GetActiveTasksCount();
             }
             else
             {
                 tasksInPool = 0;
-                aliveTasks = 0;
+                activeTasks = 0;
             }
         }
     }

@@ -19,14 +19,11 @@ namespace Kovnir.FastTweener
             }
         }
 
-        public static bool IsInitialized
-        {
-            get { return FastTweenerComponent.IsInitialized; }
-        }
-
+        private static bool inited;
+        
         public static void Init(FastTweenerSettings settings = null)
         {
-            if (IsInitialized)
+            if (inited)
             {
                 Debug.LogError(FastTweenerStringConstants.ALREADY_INITIALIZED);
                 return;
@@ -53,9 +50,9 @@ namespace Kovnir.FastTweener
             FastTweenerComponent.Kill(tween);
         }
 
-        public static bool IsAlive(FastTween tween)
+        public static bool IsActive(FastTween tween)
         {
-            return FastTweenerComponent.IsAlive(tween);
+            return FastTweenerComponent.IsActive(tween);
         }
         
         public static void SetEase(FastTween tween, Ease ease)
