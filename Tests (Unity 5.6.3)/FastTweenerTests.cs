@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using DG.Tweening;
 using Kovnir.FastTweener;
-using Kovnir.FastTweener.Extension;
 using Kovnir.FastTweener.TaskManagment;
 using NUnit.Framework;
 using UnityEngine;

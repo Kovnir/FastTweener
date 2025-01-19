@@ -149,13 +149,15 @@ namespace Kovnir.FastTweener.TaskManagment
             
             var unscaledDeltaTime = Time.unscaledDeltaTime;
             var deltaTime = Time.deltaTime;
-            for (int i = 0; i < aliveTasks.Count; i++)
+            int count = aliveTasks.Count; //we need to cache this value to start handles new tweens only in next frame
+            for (int i = 0; i < count; i++)
             {
                 var task = aliveTasks[i];
                 if (killedTasksSecond.Count > 0 && killedTasksSecond.Contains(task.Id))
                 {
                     tasksPool.Push(task);
                     aliveTasks.RemoveAt(i);
+                    count--;
                     i--;
                     continue;
                 }
@@ -183,6 +185,7 @@ namespace Kovnir.FastTweener.TaskManagment
 
                     tasksPool.Push(task);
                     aliveTasks.RemoveAt(i);
+                    count--;
                     i--;
                 }
             }
