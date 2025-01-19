@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Kovnir.FastTweener
+namespace Kovnir.FastTweener.Extension
 {
     public static class RigidbodyExtensions
     {
@@ -24,6 +24,7 @@ namespace Kovnir.FastTweener
                 MoveZ,
                 
                 Rotate,
+                RotateEuler,
             }
 
             public TweenType Type;
@@ -73,6 +74,9 @@ namespace Kovnir.FastTweener
                     case TweenType.Rotate:
                         Rigidbody.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, value);
                         break;
+                    case TweenType.RotateEuler:
+                        Rigidbody.rotation = Quaternion.Euler(Vector3.Lerp(startEuler, endEuler, value));
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -101,6 +105,14 @@ namespace Kovnir.FastTweener
             {
                 startQuaternion = start;
                 endQuaternion = end;
+            }          
+            
+            private Vector3 startEuler;
+            private Vector3 endEuler;
+            public void SetEuler(Vector3 start, Vector3 end)
+            {
+                startEuler = start;
+                endEuler = end;
             }
         }
 
@@ -311,6 +323,50 @@ namespace Kovnir.FastTweener
             var end = Quaternion.Euler(endValue);
             var tween = Pop(target, RigidbodyExtensionTween.TweenType.Rotate, onComplete);
             tween.SetQuaternion(start, end);
+            return FastTweener.Float(0, 1, duration,
+                tween.UpdateFloatAction, tween.OnCompleteAction);
+        }   
+        
+        //ease ignoreTimescale onComplete                
+        public static FastTween TweenRotateEuler(this Rigidbody target, Vector3 endValue, float duration, Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)
+        {
+            var start = target.rotation.eulerAngles;
+            var end = endValue;
+            var tween = Pop(target, RigidbodyExtensionTween.TweenType.RotateEuler, onComplete);
+            tween.SetEuler(start, end);
+            return FastTweener.Float(0, 1, duration,
+                tween.UpdateFloatAction, ease, ignoreTimescale, tween.OnCompleteAction);
+        }
+
+        //ease onComplete                
+        public static FastTween TweenRotateEuler(this Rigidbody target, Vector3 endValue, float duration, Ease ease, Action onComplete)
+        {
+            var start = target.rotation.eulerAngles;
+            var end = endValue;
+            var tween = Pop(target, RigidbodyExtensionTween.TweenType.RotateEuler, onComplete);
+            tween.SetEuler(start, end);
+            return FastTweener.Float(0, 1, duration,
+                tween.UpdateFloatAction, ease, tween.OnCompleteAction);
+        }
+
+        //ignoreTimescale onComplete                
+        public static FastTween TweenRotateEuler(this Rigidbody target, Vector3 endValue, float duration, bool ignoreTimescale, Action onComplete = null)
+        {
+            var start = target.rotation.eulerAngles;
+            var end = endValue;
+            var tween = Pop(target, RigidbodyExtensionTween.TweenType.RotateEuler, onComplete);
+            tween.SetEuler(start, end);
+            return FastTweener.Float(0, 1, duration,
+                tween.UpdateFloatAction, ignoreTimescale, tween.OnCompleteAction);
+        }
+
+        //onComplete                
+        public static FastTween TweenRotateEuler(this Rigidbody target, Vector3 endValue, float duration, Action onComplete)
+        {
+            var start = target.rotation.eulerAngles;
+            var end = endValue;
+            var tween = Pop(target, RigidbodyExtensionTween.TweenType.RotateEuler, onComplete);
+            tween.SetEuler(start, end);
             return FastTweener.Float(0, 1, duration,
                 tween.UpdateFloatAction, tween.OnCompleteAction);
         }
