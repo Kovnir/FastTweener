@@ -14,13 +14,17 @@ namespace FastTweener.Tests
 {
     public sealed class FastTweenerTests
     {
+        private const int INVALID_TASK_ID = 0;
+        private const int DEFAULT_TASK_ID = 1;
+        
         private FastTweenerComponent fastTweenerComponent;
         private TaskManager taskManager;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Setup()
         {
-            Kovnir.FastTweener.FastTweener.Init();
+            Kovnir.FastTweener.FastTweener.Dispose();
+            Kovnir.FastTweener.FastTweener.Init(null, false);
             fastTweenerComponent = Object.FindObjectOfType<FastTweenerComponent>();
             FieldInfo myFieldInfo =
                 typeof(FastTweenerComponent).GetField("taskManager", BindingFlags.Static | BindingFlags.NonPublic);
@@ -29,7 +33,6 @@ namespace FastTweener.Tests
         }
 
         [UnityTest]
-        [Order(0)]
         public IEnumerator PoolSize()
         {
             Assert.AreEqual(16, taskManager.GetTasksInPoolCount());
@@ -116,7 +119,7 @@ namespace FastTweener.Tests
             var alive = taskManager.GetActiveTasksCount();
             LogAssert.Expect(LogType.Error, "FastTweener: Callback is null!");
             var tween = Kovnir.FastTweener.FastTweener.Schedule(1, null);
-            Assert.AreEqual(0, tween.Id);
+            Assert.AreEqual(INVALID_TASK_ID, tween.Id);
             Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
             Assert.AreEqual(taskManager.GetActiveTasksCount(), alive);
         }
@@ -128,7 +131,7 @@ namespace FastTweener.Tests
             var alive = taskManager.GetActiveTasksCount();
             LogAssert.Expect(LogType.Error, "FastTweener: Callback is null!");
             var tween = Kovnir.FastTweener.FastTweener.Float(0, 1, 3, null);
-            Assert.AreEqual(0, tween.Id);
+            Assert.AreEqual(INVALID_TASK_ID, tween.Id);
             Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool);
             Assert.AreEqual(taskManager.GetActiveTasksCount(), alive);
         }
@@ -138,7 +141,7 @@ namespace FastTweener.Tests
         {
             bool done = false;
             var tween = Kovnir.FastTweener.FastTweener.Float(0, 1, 0.5f, _ => { }, () => { done = true; });
-            Assert.AreEqual(0, tween.Id);
+            Assert.AreEqual(DEFAULT_TASK_ID, tween.Id);
             Assert.False(done);
             yield return new WaitForSeconds(0.5f);
             Assert.True(done);
@@ -167,8 +170,8 @@ namespace FastTweener.Tests
         {
             float value = 0;
             var tween = Kovnir.FastTweener.FastTweener.Float(0, 1, 0.5f, f => { value = f; },
-                () => { throw new Exception("test exception"); });
-            Assert.AreEqual(0, tween.Id);
+                () => throw new Exception("test exception"));
+            Assert.AreEqual(DEFAULT_TASK_ID, tween.Id);
             Assert.AreEqual(0, value);
 
             Assert.IsTrue(tween.IsActive());
@@ -186,7 +189,7 @@ namespace FastTweener.Tests
             var tween = Kovnir.FastTweener.FastTweener.Float(0, 1, 5, f => { }, () => { });
             Assert.AreEqual(taskManager.GetTasksInPoolCount(), inPool - 1);
             Assert.AreEqual(taskManager.GetActiveTasksCount(), alive + 1);
-            Assert.AreNotEqual(0, tween.Id);
+            Assert.AreEqual(DEFAULT_TASK_ID, tween.Id);
             Assert.True(tween.IsActive());
             tween.Kill();
             yield return null;

@@ -15,19 +15,21 @@ namespace Kovnir.FastTweener
                 {
                     settings = new FastTweenerSettings();
                 }
+
                 return settings;
             }
         }
 
-        private static bool inited;
-        
+        private static bool initialized;
+
         public static void Init(FastTweenerSettings settings = null, bool dontDestroyOnLoad = true)
         {
-            if (inited)
+            if (initialized)
             {
                 Debug.LogError(FastTweenerStringConstants.ALREADY_INITIALIZED);
                 return;
             }
+
             if (settings != null)
             {
                 FastTweener.settings = settings;
@@ -35,11 +37,15 @@ namespace Kovnir.FastTweener
 
             FastTweenerComponent.Init(dontDestroyOnLoad);
         }
-        
-        public static FastTween Schedule(float delay, Action callback, bool ignoreTimescale = false)
+
+        public static void Dispose()
         {
-            return FastTweenerComponent.Schedule(delay, callback, ignoreTimescale);
+            initialized = false;
+            FastTweenerComponent.Dispose();
         }
+
+        public static FastTween Schedule(float delay, Action callback, bool ignoreTimescale = false)
+            => FastTweenerComponent.Schedule(delay, callback, ignoreTimescale);
 
         public static void Kill(FastTween tween)
         {
@@ -47,91 +53,64 @@ namespace Kovnir.FastTweener
             {
                 return;
             }
+
             FastTweenerComponent.Kill(tween);
         }
 
-        public static bool IsActive(FastTween tween)
-        {
-            return FastTweenerComponent.IsActive(tween);
-        }
-        
-        public static void SetEase(FastTween tween, Ease ease)
-        {
-            FastTweenerComponent.SetEase(tween, ease);
-        }
+        public static bool IsActive(FastTween tween) => FastTweenerComponent.IsActive(tween);
 
-        public static Ease GetEase(FastTween tween)
-        {
-            return FastTweenerComponent.GetEase(tween);
-        }
-        
-        public static void SetIgnoreTimeScale(FastTween tween, bool ignoreTimeScale)
-        {
+        public static void SetEase(FastTween tween, Ease ease) => FastTweenerComponent.SetEase(tween, ease);
+
+        public static Ease GetEase(FastTween tween) => FastTweenerComponent.GetEase(tween);
+
+        public static void SetIgnoreTimeScale(FastTween tween, bool ignoreTimeScale) =>
             FastTweenerComponent.SetIgnoreTimeScale(tween, ignoreTimeScale);
-        }
 
-        public static bool GetIgnoreTimeScale(FastTween tween)
-        {
-            return FastTweenerComponent.GetIgnoreTimeScale(tween);
-        }
+        public static bool GetIgnoreTimeScale(FastTween tween) => FastTweenerComponent.GetIgnoreTimeScale(tween);
 
-        public static void SetOnComplete(FastTween tween, Action onComplete)
-        {
+        public static void SetOnComplete(FastTween tween, Action onComplete) =>
             FastTweenerComponent.SetOnComplete(tween, onComplete);
-        }
 
         //ease ignoreTimescale onComplete
         public static FastTween Float(float start, float end, float duration, Action<float> callback,
-            Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)
-        {
-            return FastTweenerComponent.Float(start, end, duration, callback, ease, ignoreTimescale, onComplete);
-        }
-        
+            Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null) =>
+            FastTweenerComponent.Float(start, end, duration, callback, ease, ignoreTimescale, onComplete);
+
         //ease onComplete
         public static FastTween Float(float start, float end, float duration, Action<float> callback,
-            Ease ease, Action onComplete)
-        {
-            return FastTweenerComponent.Float(start, end, duration, callback, ease, false, onComplete);
-        }
-        
+            Ease ease, Action onComplete) =>
+            FastTweenerComponent.Float(start, end, duration, callback, ease, false, onComplete);
+
         //ignoreTimescale onComplete
         public static FastTween Float(float start, float end, float duration, Action<float> callback,
-            bool ignoreTimescale, Action onComplete = null)
-        {
-            return FastTweenerComponent.Float(start, end, duration, callback, Ease.Default, ignoreTimescale, onComplete);
-        }
-        
+            bool ignoreTimescale, Action onComplete = null) =>
+            FastTweenerComponent.Float(start, end, duration, callback, Ease.Default, ignoreTimescale,
+                onComplete);
+
         //onComplete
-        public static FastTween Float(float start, float end, float duration, Action<float> callback, Action onComplete)
-        {
-            return FastTweenerComponent.Float(start, end, duration, callback, Ease.Default, false, onComplete);
-        }
-        
+        public static FastTween
+            Float(float start, float end, float duration, Action<float> callback, Action onComplete) =>
+            FastTweenerComponent.Float(start, end, duration, callback, Ease.Default, false, onComplete);
+
         //ease ignoreTimescale onComplete        
         public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback,
-            Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null)
-        {
-            return FastTweenerComponent.Vector3(start, end, duration, callback, ease, ignoreTimescale, onComplete);
-        }
-        
+            Ease ease = Ease.Default, bool ignoreTimescale = false, Action onComplete = null) =>
+            FastTweenerComponent.Vector3(start, end, duration, callback, ease, ignoreTimescale, onComplete);
+
         //ease onComplete
         public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback,
-            Ease ease, Action onComplete)
-        {
-            return FastTweenerComponent.Vector3(start, end, duration, callback, ease, false, onComplete);
-        }
-        
+            Ease ease, Action onComplete) =>
+            FastTweenerComponent.Vector3(start, end, duration, callback, ease, false, onComplete);
+
         //ignoreTimescale onComplete
         public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback,
-            bool ignoreTimescale, Action onComplete = null)
-        {
-            return FastTweenerComponent.Vector3(start, end, duration, callback, Ease.Default, ignoreTimescale, onComplete);
-        }
+            bool ignoreTimescale, Action onComplete = null) =>
+            FastTweenerComponent.Vector3(start, end, duration, callback, Ease.Default, ignoreTimescale,
+                onComplete);
 
         //onComplete        
-        public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback, Action onComplete)
-        {
-            return FastTweenerComponent.Vector3(start, end, duration, callback, Ease.Default, false, onComplete);
-        }
+        public static FastTween Vector3(Vector3 start, Vector3 end, float duration, Action<Vector3> callback,
+            Action onComplete) =>
+            FastTweenerComponent.Vector3(start, end, duration, callback, Ease.Default, false, onComplete);
     }
 }

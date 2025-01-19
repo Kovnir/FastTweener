@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Kovnir.FastTweener
 {
-    public class FastTweenerComponent : MonoBehaviour
+    public sealed class FastTweenerComponent : MonoBehaviour
     {
         private static TaskManager taskManager;
 
@@ -63,46 +63,29 @@ namespace Kovnir.FastTweener
             return new FastTween(task.Id);
         }
 
-        private void KillInternal(FastTween tween)
-        {
-            taskManager.Kill(tween.Id);
-        }
-        
-        private bool IsActiveInternal(FastTween tween)
-        {
-            return taskManager.IsActive(tween.Id);
-        }
-        
-        private void SetEaseInternal(FastTween tween, Ease ease)
-        {
-            taskManager.SetEase(tween.Id, ease);
-        }
-        
-        private Ease GetEaseInternal(FastTween tween)
-        {
-            return taskManager.GetEase(tween.Id);
-        }
+        private void KillInternal(FastTween tween) 
+            => taskManager.Kill(tween.Id);
 
-        private void SetIgnoreTimeScaleInternal(FastTween tween, bool ignoreTimeScale)
-        {
-            taskManager.SetIgnoreTimeScale(tween.Id, ignoreTimeScale);
-        }
-        
-        private bool GetIgnoreTimeScaleInternal(FastTween tween)
-        {
-            return taskManager.GetIgnoreTimeScale(tween.Id);
-        }
-        
-        private void SetOnCompleteInternal(FastTween tween, Action onComplete)
-        {
-            taskManager.SetOnComplete(tween.Id, onComplete);
-        }
+        private bool IsActiveInternal(FastTween tween) 
+            => taskManager.IsActive(tween.Id);
 
-        private void Update()
-        {
-            taskManager.Process();
-        }
-        
+        private void SetEaseInternal(FastTween tween, Ease ease) 
+            => taskManager.SetEase(tween.Id, ease);
+
+        private Ease GetEaseInternal(FastTween tween) 
+            => taskManager.GetEase(tween.Id);
+
+        private void SetIgnoreTimeScaleInternal(FastTween tween, bool ignoreTimeScale) 
+            => taskManager.SetIgnoreTimeScale(tween.Id, ignoreTimeScale);
+
+        private bool GetIgnoreTimeScaleInternal(FastTween tween) 
+            => taskManager.GetIgnoreTimeScale(tween.Id);
+
+        private void SetOnCompleteInternal(FastTween tween, Action onComplete) 
+            => taskManager.SetOnComplete(tween.Id, onComplete);
+
+        private void Update() => taskManager.Process();
+
 
         public static FastTween Schedule(float delay, Action callback, bool ignoreTimescale)
         {
@@ -194,6 +177,16 @@ namespace Kovnir.FastTweener
             {
                 tasksInPool = 0;
                 activeTasks = 0;
+            }
+        }
+        
+        public static void Dispose()
+        {
+            if (instance != null)
+            {
+                Destroy(instance.gameObject);
+                instance = null;
+                taskManager = null;
             }
         }
     }
